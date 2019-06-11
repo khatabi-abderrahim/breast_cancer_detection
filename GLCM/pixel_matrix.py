@@ -1,3 +1,5 @@
+import numpy as np
+
 def number_of_pixels(image, image_rows, image_columns):
 	"""
 	Get the number of the different pixels in the given image
@@ -18,3 +20,19 @@ def number_of_pixels(image, image_rows, image_columns):
 	sorted(pixels)
 	
 	return pixels
+
+def create_matrix(pixels):
+	"""
+	Create an empty co-occurrence matrix of the chosen image
+	
+	Args:
+		pixel (array): The image to get the diferent pixels
+
+	Returns:
+		co_ocurrence_matrix (matrix): An empty matrix with the size of the number
+									  of pixels of the image
+	"""
+	number_of_pixels = len(pixels)
+	co_ocurrence_matrix = np.zeros(shape=(number_of_pixels,number_of_pixels))
+	
+	return co_ocurrence_matrix
