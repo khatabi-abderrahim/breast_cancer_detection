@@ -1,23 +1,16 @@
 import numpy as np
 
-def number_of_pixels(image, image_rows, image_columns):
+def number_of_pixels(image):
 	"""
 	Get the number of the different pixels in the given image
 	
 	Args:
 		image (array): The image to get the diferent pixels
-		image_rows (number): Number of rows in the image
-		image_columns (number): Number of columns in the image
 
 	Returns:
 		pixels (Array): The different pixels in the image
 	"""
-	pixels = []
-	for row in range(0, image_rows):
-		for column in range(0, image_columns):
-			if image[row][column] not in pixels:
-				pixels.append(image[row][column])
-	sorted(pixels)
+	pixels = list(set(image.flat))
 	
 	return pixels
 
@@ -37,7 +30,7 @@ def create_matrix(pixels):
 	
 	return co_ocurrence_matrix
 
-def pixel_relationship(image, image_rows, image_columns, reference, neighbour):
+def pixel_relationship(image, reference, neighbour):
 	"""
 	Get the number of times the relationship between the given reference pixel and
 	neighnpur pixel occur in the image
@@ -52,9 +45,25 @@ def pixel_relationship(image, image_rows, image_columns, reference, neighbour):
 	Returns:
 		count (number): The number of times the relationship happens in the given image
 	"""
+	image_rows = image.shape[0]
+	image_columns = image.shape[1]
 	count = 0
 	for row in range(1, image_rows):
 		for column in range(1, image_columns):
 			if image[row-1][column-1] == reference and image[row][column] :
 				count += 1
 	return count
+
+def update_matrix(image, matrix, pixels):
+	for pixel_reference in pixels:
+		for pixel_neighbour in pixels:
+			matrix[pixel_reference][pixel_neighbour] = pixel_relationship(image, pixel_reference, pixel_neighbour)
+	return matrix
+
+def update_matrix(image, matrix, pixels):
+	for count_reference, pixel_reference in enumerate(pixels):
+		for count_neighbour, pixel_neighbour in enumerate(pixels):
+			matrix[count_reference][count_neighbour] = pixel_relationship(image, pixel_reference, pixel_neighbour)
+			print(count_reference)
+
+	return matrix
