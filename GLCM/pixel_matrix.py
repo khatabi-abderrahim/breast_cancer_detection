@@ -70,3 +70,27 @@ def pixel_relationship_diagonal(image, reference, neighbour):
 			if image[row][column] == reference and image[row+1][column+1] == neighbour :
 				count += 1
 	return count
+
+class co_ocurrency_matrix_horizontal():
+	
+	def pixel_relationship_up(self, image, reference, neighbour):
+		"""
+		Get the number of times the relationship between the given reference pixel and
+		neighnpur pixel occur in the image
+		
+		Args:
+			image (array): The image where the number of relationships will be obtained
+			reference (number): The reference pixel
+			neighbour (number): The neighbour pixel
+
+		Returns:
+			count (number): The number of times the relationship happens in the given image
+		"""
+		image_rows = image.shape[0]
+		image_columns = image.shape[1]
+		count = 0
+		for row in range(1, image_rows):
+			for column in range(0, image_columns):
+				if image[row][column] == reference and image[row-1][column] == neighbour :
+					count += 1
+		return count
