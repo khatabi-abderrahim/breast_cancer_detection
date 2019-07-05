@@ -116,3 +116,27 @@ class co_ocurrency_matrix_horizontal():
 				if image[row][column] == reference and image[row+1][column] == neighbour :
 					count += 1
 		return count
+
+	def horizontal_relationship(self, image, pixels):
+		"""
+		Get the horizontal relationship of grey pixels in the image and create a matrix
+		
+		Args:
+			image (array): The image where the number of relationships will be obtained
+			matrix (array): 
+
+		Returns:
+			count (number): The number of times the relationship happens in the given image
+		"""
+		
+		matrix_up = create_matrix(pixels)
+		matrix_down = create_matrix(pixels)
+
+		for pixel_reference in pixels:
+			for pixel_neighbour in pixels:
+				matrix_up[pixel_reference][pixel_neighbour] = self.pixel_relationship_up(image, pixel_reference, pixel_neighbour)
+				matrix_down[pixel_reference][pixel_neighbour] = self.pixel_relationship_down(image, pixel_reference, pixel_neighbour)
+
+		glcm_matrix = matrix_down + matrix_up
+
+		return glcm_matrix
