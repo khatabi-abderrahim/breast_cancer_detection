@@ -30,7 +30,24 @@ def create_matrix(pixels):
 	
 	return co_ocurrence_matrix
 
-def pixel_relationship(image, reference, neighbour):
+def transpose_matrix(matrix):	
+	"""
+	Get the transpose of a given matrix
+	
+	Args:
+		matrix (array): The matrix to be transposed
+
+	Returns:
+		transposed_matrix (array): The transposed matrix to be transposed
+	"""
+	transposed_matrix = np.zeros(shape=matrix.shape)
+
+	for column in range(0,matrix.shape[1]):
+		transposed_matrix[column,:] = matrix[:,column]
+
+	return transposed_matrix
+
+def pixel_relationship_diagonal(image, reference, neighbour):
 	"""
 	Get the number of times the relationship between the given reference pixel and
 	neighnpur pixel occur in the image
@@ -48,22 +65,8 @@ def pixel_relationship(image, reference, neighbour):
 	image_rows = image.shape[0]
 	image_columns = image.shape[1]
 	count = 0
-	for row in range(1, image_rows):
-		for column in range(1, image_columns):
-			if image[row-1][column-1] == reference and image[row][column] :
+	for row in range(1, image_rows-1):
+		for column in range(1, image_columns-1):
+			if image[row][column] == reference and image[row+1][column+1] == neighbour :
 				count += 1
 	return count
-
-def update_matrix(image, matrix, pixels):
-	for pixel_reference in pixels:
-		for pixel_neighbour in pixels:
-			matrix[pixel_reference][pixel_neighbour] = pixel_relationship(image, pixel_reference, pixel_neighbour)
-	return matrix
-
-def update_matrix(image, matrix, pixels):
-	for count_reference, pixel_reference in enumerate(pixels):
-		for count_neighbour, pixel_neighbour in enumerate(pixels):
-			matrix[count_reference][count_neighbour] = pixel_relationship(image, pixel_reference, pixel_neighbour)
-			print(count_reference)
-
-	return matrix
