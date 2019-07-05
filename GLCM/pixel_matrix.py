@@ -119,14 +119,15 @@ class co_ocurrency_matrix_horizontal():
 
 	def horizontal_relationship(self, image, pixels):
 		"""
-		Get the horizontal relationship of grey pixels in the image and create a matrix
+		Get the horizontal relationship of grey pixels with a difference of one pixel
+		in the image and create a matrix
 		
 		Args:
 			image (array): The image where the number of relationships will be obtained
-			matrix (array): 
+			pixels (array): An array with the set of pixels in the image
 
 		Returns:
-			count (number): The number of times the relationship happens in the given image
+			glcm_matrix (array): The array of the relationships that happen in the given image
 		"""
 		
 		matrix_up = create_matrix(pixels)
@@ -137,6 +138,28 @@ class co_ocurrency_matrix_horizontal():
 				matrix_up[pixel_reference][pixel_neighbour] = self.pixel_relationship_up(image, pixel_reference, pixel_neighbour)
 				matrix_down[pixel_reference][pixel_neighbour] = self.pixel_relationship_down(image, pixel_reference, pixel_neighbour)
 
-		glcm_matrix = matrix_down + matrix_up
+		glcm_matrix = (matrix_down  + matrix_up) 
 
-		return glcm_matrix
+		return matrix_up, matrix_down, glcm_matrix
+
+	def horizontal_relationship_probabilities(self, glcm_matrixes):
+		"""
+		Get the probability of the horizontal relationship of grey pixels in the image
+		
+		Args:
+			image (array): The image where the number of relationships will be obtained
+			matrix (array): 
+
+		Returns:
+			count (number): The number of times the relationship happens in the given image
+		"""
+		
+		matrix_up = glcm_matrixes[0]
+		matrix_down = glcm_matrixes[1]
+		glcm_matrix = glcm_matrixes[2]
+
+		number_of_relationships = float((matrix_up.shape[0]-1)*matrix_up.shape[1]) + float((matrix_down.shape[0]-1)*matrix_down.shape[1])
+		glcm_percentage_matrix = glcm_matrix * (1.0/number_of_relationships)
+		glcm_percentage_matrix = np.around(glcm_percentage_matrix, decimals=3)
+
+		return glcm_percentage_matrix
