@@ -27,3 +27,5 @@ c_matrix = co_ocurrency_matrix_horizontal()
 
 new_matrix = c_matrix.horizontal_relationship(example_image, pixels)
 print (new_matrix)
+pnm = c_matrix.horizontal_relationship_probabilities(new_matrix)
+print(pnm)
