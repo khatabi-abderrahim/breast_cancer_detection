@@ -71,7 +71,7 @@ def pixel_relationship_diagonal(image, reference, neighbour):
 				count += 1
 	return count
 
-class co_ocurrency_matrix_horizontal():
+class co_ocurrency_matrix_vertical():
 	
 	def pixel_relationship_up(self, image, reference, neighbour):
 		"""
@@ -117,17 +117,20 @@ class co_ocurrency_matrix_horizontal():
 					count += 1
 		return count
 
-	def horizontal_relationship(self, image, pixels):
+	def vertical_relationship(self, image, pixels):
 		"""
-		Get the horizontal relationship of grey pixels with a difference of one pixel
-		in the image and create a matrix
+		Get the vertical relationship of grey pixels with a difference of one pixel
+		in the image and create the grey co-ocurrency matrix
 		
 		Args:
 			image (array): The image where the number of relationships will be obtained
 			pixels (array): An array with the set of pixels in the image
 
 		Returns:
-			glcm_matrix (array): The array of the relationships that happen in the given image
+			matrix_up (array): The reference-neighbour relationship from south to north
+			matrix_down (array): The reference-neighbour relationship from north o south
+			glcm_matrix (array): The array of the relationships that happens
+								 in the given image
 		"""
 		
 		matrix_up = create_matrix(pixels)
@@ -151,7 +154,8 @@ class co_ocurrency_matrix_horizontal():
 			matrix (array): 
 
 		Returns:
-			count (number): The number of times the relationship happens in the given image
+			glcm_percentage_matrix (array): The percentage of the relationship between
+											two pixels in the image
 		"""
 		
 		matrix_up = glcm_matrixes[0]
