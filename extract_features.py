@@ -1,9 +1,10 @@
 import cv2
 import numpy as np
 from GLCM.pixel_matrix import *
+from GLCM.textures_measurements import *
 
 """
-Script to gextract the features from the image
+Script to extract the features from the image
 """
 
 # image
@@ -23,9 +24,14 @@ print(pixels)
 
 first_pixels = pixels[:4]
 
-c_matrix = co_ocurrency_matrix_horizontal()
+c_matrix = co_ocurrency_matrix_vertical()
 
-new_matrix = c_matrix.horizontal_relationship(example_image, pixels)
+new_matrix = c_matrix.vertical_relationship(example_image, pixels)
 print (new_matrix)
-pnm = c_matrix.horizontal_relationship_probabilities(new_matrix)
-print(pnm)
+
+glcm_percentage_matrix = c_matrix.horizontal_relationship_probabilities(new_matrix)
+print(glcm_percentage_matrix)
+
+measurements = texture_measurements()
+contrast = measurements.contrast_measure(glcm_percentage_matrix, pixels)
+print("contrast: {}".format(contrast))
