@@ -145,7 +145,7 @@ class co_ocurrency_matrix_vertical():
 
 		return matrix_up, matrix_down, glcm_matrix
 
-	def horizontal_relationship_probabilities(self, glcm_matrixes):
+	def vertical_relationship_probabilities(self, glcm_matrixes):
 		"""
 		Get the probability of the horizontal relationship of grey pixels in the image
 		
