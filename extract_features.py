@@ -29,9 +29,12 @@ c_matrix = co_ocurrency_matrix_vertical()
 new_matrix = c_matrix.vertical_relationship(example_image, pixels)
 print (new_matrix)
 
-glcm_percentage_matrix = c_matrix.horizontal_relationship_probabilities(new_matrix)
+glcm_percentage_matrix = c_matrix.vertical_relationship_probabilities(new_matrix)
 print(glcm_percentage_matrix)
 
 measurements = texture_measurements()
-contrast = measurements.contrast_measure(glcm_percentage_matrix, pixels)
-print("contrast: {}".format(contrast))
+contrast = measurements.contrast_group_measurements(glcm_percentage_matrix, pixels)
+
+# Create a text file to write the GLCM results
+data_file = open("Results/GLCM_results.txt","w+")
+data_file.write("contrast: {} - dissimilarity: {} - homogeneity: {}".format(contrast[0], contrast[1], contrast[2]))
