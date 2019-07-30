@@ -167,3 +167,26 @@ class co_ocurrency_matrix_vertical():
 		glcm_percentage_matrix = np.around(glcm_percentage_matrix, decimals=3)
 
 		return glcm_percentage_matrix
+
+class co_ocurrency_matrix_horizontal():
+	def pixel_relationship_left(self, image, reference, neighbour):
+		"""
+		Get the number of times the horizontal relationship from left to rigth between
+		the given reference pixel and neighnpur pixel occur in the image
+		
+		Args:
+			image (array): The image where the number of relationships will be obtained
+			reference (number): The reference pixel
+			neighbour (number): The neighbour pixel
+
+		Returns:
+			count (number): The number of times the relationship happens in the given image
+		"""
+		image_rows = image.shape[0]
+		image_columns = image.shape[1]
+		count = 0
+		for row in range(1, image_rows):
+			for column in range(0, image_columns):
+				if image[row][column] == reference and image[row][column-1] == neighbour :
+					count += 1
+		return count
