@@ -1,9 +1,19 @@
 import math
 
+"""
+They are Energy, Entropy, Contrast, Correlation, and  Homogeneity. Energy
+returns the sum  of  squared elements in the GLCM and the range will be in
+[0, 1]. Entropy measures the randomness  of  intensity  distribution.
+Correlation measure of  image  linearity, and Homogeneity Returns a value that
+measures the closeness of the distribution of elements in the GLCM to the GLCM
+diagonal and range will be in [0 1].
+"""
+
 class texture_measurements():
 	def contrast_group_measurements(self, glcm_percentage_matrix, pixel_set):
 		"""
-		Get the contrast measurements of the image from the glcm percentage matrix
+		Get the contrast measurements of the image from the glcm percentage matrix.
+		Contrast measures the  amount  of local  variation  in  the  image.
 		
 		Args:
 			glcm_percentage_matrix (array): The percentage of the relationship between
