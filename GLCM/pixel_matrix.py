@@ -147,7 +147,7 @@ class co_ocurrency_matrix_vertical():
 
 	def vertical_relationship_probabilities(self, glcm_matrixes):
 		"""
-		Get the probability of the horizontal relationship of grey pixels in the image
+		Get the probability of the vertical relationship of grey pixels in the image
 		
 		Args:
 			image (array): The image where the number of relationships will be obtained
@@ -223,8 +223,8 @@ class co_ocurrency_matrix_horizontal():
 			pixels (array): An array with the set of pixels in the image
 
 		Returns:
-			matrix_up (array): The reference-neighbour relationship from south to north
-			matrix_down (array): The reference-neighbour relationship from north o south
+			matrix_left (array): The reference-neighbour relationship from west to east
+			matrix_right (array): The reference-neighbour relationship from east o west
 			glcm_matrix (array): The array of the relationships that happens
 								 in the given image
 		"""
@@ -240,3 +240,27 @@ class co_ocurrency_matrix_horizontal():
 		glcm_matrix = (matrix_left + matrix_right) 
 
 		return matrix_left, matrix_right, glcm_matrix
+
+	def horizontal_relationship_probabilities(self, glcm_matrixes):
+		"""
+		Get the probability of the horizontal relationship of grey pixels in the image
+		
+		Args:
+			image (array): The image where the number of relationships will be obtained
+			matrix (array): 
+
+		Returns:
+			glcm_percentage_matrix (array): The percentage of the relationship between
+											two pixels in the image
+		"""
+		
+		matrix_left = glcm_matrixes[0]
+		matrix_right = glcm_matrixes[1]
+		glcm_horizontal_matrix = glcm_matrixes[2]
+
+		number_of_relationships = float((matrix_left.shape[0]-1)*matrix_left.shape[1]) + float((matrix_right.shape[0]-1)*matrix_right.shape[1])
+		print(number_of_relationships)
+		glcm_percentage_matrix = glcm_horizontal_matrix * (1.0/number_of_relationships)
+		glcm_percentage_matrix = np.around(glcm_percentage_matrix, decimals=3)
+
+		return glcm_percentage_matrix
