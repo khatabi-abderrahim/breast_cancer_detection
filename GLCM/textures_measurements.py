@@ -36,3 +36,23 @@ class texture_measurements():
 				homogeneity += float(glcm_percentage_matrix[reference][neighbour]) / float(1 + math.pow((pixel_set[reference]-pixel_set[neighbour]),2))
 
 		return contrast, dissimilarity, homogeneity
+
+	def energy_measurements(self, glcm_percentage_matrix, pixel_set):
+		"""
+		Get the energy measurements of the image from the glcm percentage matrix.
+		
+		Args:
+			glcm_percentage_matrix (array): The percentage of the relationship between
+											two pixels in the image
+			pixel_set (array): An array with the set of pixels in the image
+
+		Returns:
+			energy (number): The contrast probability level of the image
+		"""
+		energy = 0
+
+		for reference in pixel_set:
+			for neighbour in pixel_set:
+				energy += math.pow(glcm_percentage_matrix[reference][neighbour],2)
+
+		return energy
