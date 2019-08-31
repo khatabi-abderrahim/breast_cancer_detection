@@ -46,8 +46,6 @@ horizontal_measurements_object = texture_measurements()
 horizontal_contrast = horizontal_measurements_object.contrast_group_measurements(glcm_horizontal_percentage_matrix, pixels)
 
 # Create a text file to write the GLCM results
-data_file = open("Results/GLCM_results.txt","a")
-data_file.write("Measurements:\n")
-data_file.write("{}.- contrast: {} - dissimilarity: {} - homogeneity: {} - energy: {} \n".format("1", vertical_contrast[0], vertical_contrast[1], vertical_contrast[2],vertical_energy))
-data_file.write("{}.- contrast: {} - dissimilarity: {} - homogeneity: {} \n".format("1", horizontal_contrast[0], horizontal_contrast[1], horizontal_contrast[2]))
-
+data_file = open("Results/GLCM_results.txt","a+")
+data_file.write("{}\n{}\n{}\n{}\n".format(vertical_contrast[0], vertical_contrast[1], vertical_contrast[2],vertical_energy))
+data_file.write("{}\n{}\n{}\n".format(horizontal_contrast[0], horizontal_contrast[1], horizontal_contrast[2]))
