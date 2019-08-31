@@ -1,5 +1,5 @@
 import cv2
-import numpy as np
+import numpy
 from GLCM.pixel_matrix import *
 from GLCM.textures_measurements import *
 
@@ -12,7 +12,7 @@ image = cv2.imread('all-mias/mdb001.pgm',0)
 image_shape = image.shape
 image_rows = image_shape[0]
 image_columns = image_shape[1]
-example_image = np.array([[0, 0, 1, 1],
+example_image = numpy.array([[0, 0, 1, 1],
 						  [0, 0, 1, 1],
 						  [0, 2, 2, 2],
 						  [2, 2, 3, 3],
