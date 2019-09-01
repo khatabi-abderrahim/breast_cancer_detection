@@ -1,4 +1,4 @@
-import numpy as np
+import numpy
 
 def number_of_pixels(image):
 	"""
@@ -26,7 +26,7 @@ def create_matrix(pixels):
 									  of pixels of the image
 	"""
 	number_of_pixels = len(pixels)
-	co_ocurrence_matrix = np.zeros(shape=(number_of_pixels,number_of_pixels))
+	co_ocurrence_matrix = numpy.zeros(shape=(number_of_pixels,number_of_pixels))
 	
 	return co_ocurrence_matrix
 
@@ -40,7 +40,7 @@ def transpose_matrix(matrix):
 	Returns:
 		transposed_matrix (array): The transposed matrix to be transposed
 	"""
-	transposed_matrix = np.zeros(shape=matrix.shape)
+	transposed_matrix = numpy.zeros(shape=matrix.shape)
 
 	for column in range(0,matrix.shape[1]):
 		transposed_matrix[column,:] = matrix[:,column]
@@ -164,7 +164,7 @@ class co_ocurrency_matrix_vertical():
 
 		number_of_relationships = float((matrix_up.shape[0]-1)*matrix_up.shape[1]) + float((matrix_down.shape[0]-1)*matrix_down.shape[1])
 		glcm_percentage_matrix = glcm_matrix * (1.0/number_of_relationships)
-		glcm_percentage_matrix = np.around(glcm_percentage_matrix, decimals=3)
+		glcm_percentage_matrix = numpy.around(glcm_percentage_matrix, decimals=3)
 
 		return glcm_percentage_matrix
 
@@ -261,6 +261,6 @@ class co_ocurrency_matrix_horizontal():
 		number_of_relationships = float((matrix_left.shape[0]-1)*matrix_left.shape[1]) + float((matrix_right.shape[0]-1)*matrix_right.shape[1])
 		print(number_of_relationships)
 		glcm_percentage_matrix = glcm_horizontal_matrix * (1.0/number_of_relationships)
-		glcm_percentage_matrix = np.around(glcm_percentage_matrix, decimals=3)
+		glcm_percentage_matrix = numpy.around(glcm_percentage_matrix, decimals=3)
 
 		return glcm_percentage_matrix
