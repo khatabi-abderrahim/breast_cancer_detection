@@ -1,4 +1,5 @@
 import numpy
+import pca_math
 
 class  pca_matrix_creation():
 	"""
@@ -30,10 +31,34 @@ class pca_calculation():
 	def unify_variables(self, glcm_measurements):
 		"""
 		First unify each variable from the matrix
+
+		Args:
+			glcm_measurements (array): The GLCM measurements data
+
+		Returns:
+			unified_measurements (array): The unified GLCM measurements 
 		"""
 		glcm_measurements = numpy.array(glcm_measurements)
+		unified_measurements = numpy.empty(glcm_measurements.shape)
 		
 		for value in range(0,glcm_measurements.size-1):
-			glcm_measurements[value] = (glcm_measurements[value] - round(glcm_measurements.mean(),4))/round(glcm_measurements.std(),4)
+			unified_measurements[value] = (glcm_measurements[value] - round(glcm_measurements.mean(),4))/round(glcm_measurements.std(),4)
 
-		return glcm_measurements
+		return unified_measurements
+
+	def multiply_variables_transpose(self, unified_measurements):
+		"""
+		Multiplies the unified variables matrix by it's transpose
+
+		Args:
+			unified_measurements (array): The unified GLCM measurements
+
+		Returns:
+			matrix_a (array): The resultant matrix multiplication
+		"""
+		matrix_a = numpy.empty(unified_measurements.shape)
+		transposed_unified_measurements = pca_math.matrix_transpose(unified_measurements)
+
+		matrix_a = unified_measurements * transposed_unified_measurements
+
+		return matrix_a
