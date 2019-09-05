@@ -28,7 +28,7 @@ class pca_calculation():
 	Calculate the principal components from the GLCM measurements to validate wich
 	one of them will be able to predict if the image has a malformation
 	"""
-	def unify_variables(self, glcm_measurements):
+	def calculate_standardized_variables(self, glcm_measurements):
 		"""
 		First unify each variable from the matrix
 
@@ -39,14 +39,18 @@ class pca_calculation():
 			unified_measurements (array): The unified GLCM measurements 
 		"""
 		glcm_measurements = numpy.array(glcm_measurements)
-		unified_measurements = numpy.empty(glcm_measurements.shape)
-		
-		for value in range(0,glcm_measurements.size-1):
-			unified_measurements[value] = (glcm_measurements[value] - round(glcm_measurements.mean(),4))/round(glcm_measurements.std(),4)
 
-		return unified_measurements
+		standardized_variables = numpy.zeros(shape=(glcm_measurements.shape))
 
-	def multiply_variables_transpose(self, unified_measurements):
+		for row in range(0,glcm_measurements.shape[0]):
+			for column in range(0,glcm_measurements.shape[1]):
+				standardized_variables[row][column] = (glcm_measurements[row][column] - round(glcm_measurements[:,column].mean(),5))/round(glcm_measurements[:,column].std(ddof=1),5)
+
+		standardized_variables = numpy.round(standardized_variables,3)
+
+		return standardized_variables
+
+	def calculate_correlation_matrix(self, unified_measurements):
 		"""
 		Multiplies the unified variables matrix by it's transpose
 
@@ -54,11 +58,9 @@ class pca_calculation():
 			unified_measurements (array): The unified GLCM measurements
 
 		Returns:
-			matrix_a (array): The resultant matrix multiplication
+			correlation_matrix (array): The resultant matrix multiplication
 		"""
-		matrix_a = numpy.empty(unified_measurements.shape)
-		transposed_unified_measurements = pca_math.matrix_transpose(unified_measurements)
+		correlation_matrix = numpy.dot(unified_measurements.transpose(),unified_measurements)
+		correlation_matrix = numpy.round(correlation_matrix,3)
 
-		matrix_a = unified_measurements * transposed_unified_measurements
-
-		return matrix_a
+		return correlation_matrix
