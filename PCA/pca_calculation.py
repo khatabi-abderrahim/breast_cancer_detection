@@ -85,3 +85,20 @@ class pca_calculation():
 		eigen_vectors = numpy.round(eigen_vectors,3)
 		
 		return unitary_values,eigen_values, eigen_vectors
+
+	def calculate_variance_vector(self, eigen_values, number_of_rows):
+		"""
+		Calculate the variance vector
+
+		Arguments:
+			eigen_values (matrix):  Matrix with the singular values (D)
+			number_of_rows (number): The number of rows of the data matrix
+
+		Resutrns:
+			variance_vector (matrix): 
+		"""
+
+		variance_vector = eigen_values/numpy.sqrt(number_of_rows-1)
+		variance_vector = numpy.round(variance_vector,5)
+
+		return variance_vector
