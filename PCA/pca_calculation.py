@@ -102,3 +102,20 @@ class pca_calculation():
 		variance_vector = numpy.round(variance_vector,5)
 
 		return variance_vector
+
+	def calculate_loadings(self, variance_vectors, eigen_vectors):
+		"""
+		Calculate loadings
+
+		Arguments:
+			variance_vector (matrix):
+
+		Returns:
+			loadings (matrix):
+		"""
+		loadings = numpy.zeros(shape=(eigen_vectors.shape))
+
+		for column in range(0,eigen_vectors.shape[1]):
+			loadings[:,column] = numpy.round((eigen_vectors[:,column] * variance_vector[column]),4)
+
+		return loadings
