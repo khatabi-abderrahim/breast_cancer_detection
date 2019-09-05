@@ -1,6 +1,6 @@
 import numpy
 
-def matrix_transpose(matrix):
+def calculate_matrix_transpose(matrix):
 	"""
 	Receives a matrix and returns it's transpose
 
@@ -10,9 +10,12 @@ def matrix_transpose(matrix):
 	Returns:
 		transposed_matrix (array): The transposed matrix
 	"""
-	transposed_matrix = numpy.empty(matrix.shape)
+	matrix_rows = matrix.shape[0]
+	matrix_columns = matrix.shape[1]
 
-	for file in range(0,matrix.shape[0]):
-		transposed_matrix[file,:] = matrix[:,file]
+	transposed_matrix = numpy.zeros(shape=(matrix_columns,matrix_rows))
+
+	for rows in range(0,transposed_matrix.shape[0]):
+		transposed_matrix[rows,:] = matrix[:,rows]
 
 	return transposed_matrix
