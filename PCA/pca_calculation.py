@@ -64,3 +64,24 @@ class pca_calculation():
 		correlation_matrix = numpy.round(correlation_matrix,3)
 
 		return correlation_matrix
+
+	def calculate_singular_value_decomposition(self, unified_measurements):
+		"""
+		It is the generalization of the eigendecomposition of a positive normal matrix
+
+		Arguments:
+			unified_measurements (matrix): 
+
+		Returns:
+			unitary_values (matrix): Matrix with the unitary arrays (P)
+			eigen_values (matrix):  Matrix with the singular values (D)
+			eigen_vectors (matrix):  Matrix with the singular vectors (Q)
+		"""
+
+		unitary_values, eigen_values, eigen_vectors = numpy.linalg.svd(unified_measurements, full_matrices=True)
+
+		unitary_values = numpy.round(unitary_values,3)
+		eigen_values = numpy.round(eigen_values,3)
+		eigen_vectors = numpy.round(eigen_vectors,3)
+		
+		return unitary_values,eigen_values, eigen_vectors
