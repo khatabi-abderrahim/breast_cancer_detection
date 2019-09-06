@@ -30,23 +30,6 @@ def create_matrix(pixels):
 	
 	return co_ocurrence_matrix
 
-def transpose_matrix(matrix):	
-	"""
-	Get the transpose of a given matrix
-	
-	Args:
-		matrix (array): The matrix to be transposed
-
-	Returns:
-		transposed_matrix (array): The transposed matrix to be transposed
-	"""
-	transposed_matrix = numpy.zeros(shape=matrix.shape)
-
-	for column in range(0,matrix.shape[1]):
-		transposed_matrix[column,:] = matrix[:,column]
-
-	return transposed_matrix
-
 def pixel_relationship_diagonal(image, reference, neighbour):
 	"""
 	Get the number of times the relationship between the given reference pixel and
