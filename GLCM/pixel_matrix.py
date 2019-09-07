@@ -1,6 +1,5 @@
 import numpy
 import cv2
-from tasks import add_numbers
 
 def number_of_pixels():
 	"""
@@ -11,7 +10,7 @@ def number_of_pixels():
 		None: There is no variable return in this functio, it is all stored
 		in text files.
 	"""
-	for number in range(1,4):
+	for number in range(1,322):
 		image = cv2.imread("all-mias/mdb{}.pgm".format(number),0)
 		one_dimensional_image = list(cv2.imread('all-mias/mdb1.pgm',0).flatten())
 		one_dimensional_image = list(set(one_dimensional_image))
@@ -20,9 +19,6 @@ def number_of_pixels():
 		pixel_file.close()
 	
 	return None
-
-
-number_of_pixels()
 
 def create_matrix(pixels):
 	"""
