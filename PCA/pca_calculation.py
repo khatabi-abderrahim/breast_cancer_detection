@@ -36,7 +36,7 @@ class pca_calculation():
 			glcm_measurements (array): The GLCM measurements data
 
 		Returns:
-			unified_measurements (array): The unified GLCM measurements 
+			standardized_measurements (array): The unified GLCM measurements 
 		"""
 		glcm_measurements = numpy.array(glcm_measurements)
 
@@ -105,7 +105,7 @@ class pca_calculation():
 
 	def calculate_loadings(self, variance_vectors, eigen_vectors):
 		"""
-		Calculate loadings
+		Calculate loadings to visualice how variabels group.
 
 		Arguments:
 			variance_vector (matrix):
@@ -119,3 +119,19 @@ class pca_calculation():
 			loadings[:,column] = numpy.round((eigen_vectors[:,column] * variance_vector[column]),4)
 
 		return loadings
+
+	def calculate_scores(self, standardized_variables, eigen_vectors):
+		"""
+		Calculate scores
+
+		Arguments:
+			standardized_measurements (array): The unified GLCM measurements (A)
+			eigen_vectors (matrix):  Matrix with the singular vectors (Q)
+		
+		Returns:
+			score_values (matrix):
+		"""
+		scores_values = numpy.dot(standardized_variables, eigen_vectors)
+		scores_values = numpy.round(scores_values, 3)
+		
+		return scores_values
