@@ -1,27 +1,27 @@
 import cv2
 import numpy
-from GLCM.pixel_matrix import *
+from GLCM.pixel_matrix import number_of_pixels
 from GLCM.textures_measurements import *
+from tasks import get_vertical_glcm_matrix
 
 """
 Script to extract the features from the image
 """
 
-# image
-image = cv2.imread('all-mias/mdb001.pgm',0)
-image_shape = image.shape
-image_rows = image_shape[0]
-image_columns = image_shape[1]
-example_image = numpy.array([[0, 0, 1, 1],
-						  [0, 0, 1, 1],
-						  [0, 2, 2, 2],
-						  [2, 2, 3, 3],
-				])
+# Get the number of each of the dataset image
+number_of_pixels()
 
-pixels = number_of_pixels(example_image)
+"""
+Call the function that will delegate the GLCM vertical relationship
+calculations in an asynchronous way.
+"""
+for number in range(1,4):
+	image_file_location = "all-mias/mdb{}.pgm".format(number)
+	pixels_file_location = "GLCM/pixels/mdb{}.txt".format(number)
+	get_vertical_glcm_matrix.delay(image_file_location, pixels_file_location)
 
-first_pixels = pixels[:4]
 
+"""
 # Calculate the vertical matrix
 vertical_matrix_object = co_ocurrency_matrix_vertical()
 
@@ -49,3 +49,4 @@ horizontal_contrast = horizontal_measurements_object.contrast_group_measurements
 data_file = open("Results/GLCM_results.txt","a+")
 data_file.write("{}\n{}\n{}\n{}\n".format(vertical_contrast[0], vertical_contrast[1], vertical_contrast[2],vertical_energy))
 data_file.write("{}\n{}\n{}\n".format(horizontal_contrast[0], horizontal_contrast[1], horizontal_contrast[2]))
+"""
