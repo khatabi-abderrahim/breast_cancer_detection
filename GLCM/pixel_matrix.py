@@ -1,5 +1,7 @@
 import numpy
 import cv2
+from GLCM.GLCM_helper_functions import string_array_to_int_array
+from helper_functions import read_text_files
 
 def number_of_pixels():
 	"""
@@ -77,11 +79,14 @@ class co_ocurrency_matrix_vertical():
 		"""
 		image_rows = image.shape[0]
 		image_columns = image.shape[1]
+		
 		count = 0
+		
 		for row in range(1, image_rows):
 			for column in range(0, image_columns):
 				if image[row][column] == reference and image[row-1][column] == neighbour :
 					count += 1
+		
 		return count
 
 	def pixel_relationship_down(self, image, reference, neighbour):
@@ -125,8 +130,8 @@ class co_ocurrency_matrix_vertical():
 		matrix_up = create_matrix(pixels)
 		matrix_down = create_matrix(pixels)
 
-		for pixel_reference in pixels:
-			for pixel_neighbour in pixels:
+		for pixel_reference in range(0,len(pixels)):
+			for pixel_neighbour in range(0,len(pixels)):
 				matrix_up[pixel_reference][pixel_neighbour] = self.pixel_relationship_up(image, pixel_reference, pixel_neighbour)
 				matrix_down[pixel_reference][pixel_neighbour] = self.pixel_relationship_down(image, pixel_reference, pixel_neighbour)
 
@@ -134,23 +139,32 @@ class co_ocurrency_matrix_vertical():
 
 		return matrix_up, matrix_down, glcm_matrix
 
-	def vertical_relationship_probabilities(self, glcm_matrixes):
+	def vertical_relationship_probabilities(self, image_location, pixel_file_location):
 		"""
 		Get the probability of the vertical relationship of grey pixels in the image
 		
 		Args:
-			image (array): The image where the number of relationships will be obtained
-			matrix (array): 
+			image_location (string): The location of image to be read and converted
+									 into a 2D array
+			pixel_file_location (string): The location of the image pixels to be read
+										  and converted into an array 
 
 		Returns:
 			glcm_percentage_matrix (array): The percentage of the relationship between
 											two pixels in the image
 		"""
-		
-		matrix_up = glcm_matrixes[0]
-		matrix_down = glcm_matrixes[1]
-		glcm_matrix = glcm_matrixes[2]
+		# Reads the image from the fila
+		image = cv2.imread(image_location, 0)
 
+		pixels = read_text_files(pixel_file_location)
+
+		pixels_array = string_array_to_int_array(pixels)
+		vertical_relationships = self.vertical_relationship(image, pixels_array)
+
+		matrix_up = vertical_relationships[0]
+		matrix_down = vertical_relationships[1]
+		glcm_matrix = vertical_relationships[2]
+		
 		number_of_relationships = float((matrix_up.shape[0]-1)*matrix_up.shape[1]) + float((matrix_down.shape[0]-1)*matrix_down.shape[1])
 		glcm_percentage_matrix = glcm_matrix * (1.0/number_of_relationships)
 		glcm_percentage_matrix = numpy.around(glcm_percentage_matrix, decimals=3)
