@@ -15,11 +15,10 @@ number_of_pixels()
 Call the function that will delegate the GLCM vertical relationship
 calculations in an asynchronous way.
 """
-for number in range(1,4):
-	image_file_location = "all-mias/mdb{}.pgm".format(number)
-	pixels_file_location = "GLCM/pixels/mdb{}.txt".format(number)
-	get_vertical_glcm_matrix.delay(image_file_location, pixels_file_location)
-
+for image_number in range(1,4):
+	image_file_location = "all-mias/mdb{}.pgm".format(image_number)
+	pixels_file_location = "GLCM/pixels/mdb{}.txt".format(image_number)
+	result = get_vertical_glcm_matrix.delay(image_number, image_file_location, pixels_file_location)
 
 """
 # Calculate the vertical matrix
