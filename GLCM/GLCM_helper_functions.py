@@ -1,7 +1,7 @@
 import cv2
 import numpy
 
-def ReduceImages(image):
+def redude_images(image):
 	"""
 	Takes an image and reduces its black square spots
 
@@ -20,7 +20,6 @@ def ReduceImages(image):
 	image = numpy.delete(image, zero_pixels, 1)
 
 	return image
-
 
 def string_array_to_int_array(string_array):
 	"""
