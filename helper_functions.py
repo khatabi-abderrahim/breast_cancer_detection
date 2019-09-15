@@ -22,7 +22,7 @@ def write_text_files(link_to_file, result_data):
 		link_to_file (String): The string containing the link to the file
 	"""
 	file = open(link_to_file,"w")
-	written_file.write(str(result_data))
+	file.write(str(result_data))
 	file.close()
 
 	return None
