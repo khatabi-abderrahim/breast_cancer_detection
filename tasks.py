@@ -18,3 +18,17 @@ def get_vertical_glcm_matrix(image_number, image_file_location, pixels_file_loca
 	result = co_ocurrency_matrix_vertical().vertical_relationship_probabilities(image_number, image_file_location, pixels_file_location)
 
 	return result
+
+@app.task()
+def get_horizontal_glcm_matrix(image_number, image_file_location, pixels_file_location):
+	"""
+	This function is made to delegate the GLCM horizontal relationship calculations
+	in an asynchronous way.
+
+	Arguments:
+		image_file_location
+	"""	
+	
+	result = co_ocurrency_matrix_horizontal().horizontal_relationship_probabilities(image_number, image_file_location, pixels_file_location)
+
+	return result
