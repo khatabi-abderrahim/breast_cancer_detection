@@ -69,36 +69,3 @@ class CoOcurrencyMatrixVertical():
 		numpy.savetxt("GLCM/matrix/glcm_percentage_matrix_image{}_1.txt".format(image_number), glcm_percentage_matrix[:, :, 0, 0])
 
 		return "GLCM/matrix/percentage_matrix_image{}".format(image_number)
-
-class co_ocurrency_matrix_horizontal():
-	def horizontal_relationship_probabilities(self, image_number, image_file_location, pixels_file_location):
-		"""
-		Get the probability of the horizontal relationship of grey pixels in the image
-		
-		Args:
-			image (array): The image where the number of relationships will be obtained
-			matrix (array): 
-
-		Returns:
-			glcm_percentage_matrix (array): The percentage of the relationship between
-											two pixels in the image
-		"""
-		# Reads the image from the fila
-		image = cv2.imread(image_file_location, 0)
-
-		pixels = read_text_files(pixels_file_location)
-
-		pixels_array = string_array_to_int_array(pixels)
-
-		hotizontal_relationships = self.hotizontal_relationship(image, pixels_array)
-
-		matrix_up = hotizontal_relationships[0]
-		matrix_down = hotizontal_relationships[1]
-		glcm_matrix = hotizontal_relationships[2]
-
-		number_of_relationships = float((matrix_left.shape[0]-1)*matrix_left.shape[1]) + float((matrix_right.shape[0]-1)*matrix_right.shape[1])
-		print(number_of_relationships)
-		glcm_percentage_matrix = glcm_horizontal_matrix * (1.0/number_of_relationships)
-		glcm_percentage_matrix = numpy.around(glcm_percentage_matrix, decimals=3)
-
-		return glcm_percentage_matrix
