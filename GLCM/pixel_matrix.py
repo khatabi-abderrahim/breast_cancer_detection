@@ -42,31 +42,6 @@ class CoOcurrencyMatrixVertical():
 	A grey level co-occurrence matrix is a histogram of co-occurring greyscale values
 	at a given offset over an image.
 	"""
-	
-	def pixel_relationship_up(self, image, reference, neighbour):
-		"""
-		Get the number of times the relationship between the given reference pixel and
-		neighnpur pixel occur in the image
-		
-		Args:
-			image (array): The image where the number of relationships will be obtained
-			reference (number): The reference pixel
-			neighbour (number): The neighbour pixel
-
-		Returns:
-			count (number): The number of times the relationship happens in the given image
-		"""
-		image_rows = image.shape[0]
-		image_columns = image.shape[1]
-		
-		count = 0
-		
-		for row in range(1, image_rows):
-			for column in range(0, image_columns):
-				if image[row][column] == reference and image[row-1][column] == neighbour :
-					count += 1
-		
-		return count
 
 	def pixel_relationship_down(self, image, reference, neighbour):
 		"""
@@ -89,33 +64,6 @@ class CoOcurrencyMatrixVertical():
 				if image[row][column] == reference and image[row+1][column] == neighbour :
 					count += 1
 		return count
-
-	def vertical_relationship(self, image, pixels):
-		"""
-		Get the vertical relationship of grey pixels with a difference of one pixel
-		in the image and create the grey co-ocurrency matrix
-		
-		Args:
-			image (array): The image where the number of relationships will be obtained
-			pixels (array): An array with the set of pixels in the image
-
-		Returns:
-			matrix_up (array): The reference-neighbour relationship from south to north
-			matrix_down (array): The reference-neighbour relationship from north o south
-			glcm_matrix (array): The array of the relationships that happens
-								 in the given image
-		"""
-		matrix_up = create_matrix(pixels)
-		matrix_down = create_matrix(pixels)
-		
-		for pixel_reference in range(0,len(pixels)):
-			for pixel_neighbour in range(0,len(pixels)):
-				matrix_up[pixel_reference][pixel_neighbour] = self.pixel_relationship_up(image, pixel_reference, pixel_neighbour)
-				matrix_down[pixel_reference][pixel_neighbour] = self.pixel_relationship_down(image, pixel_reference, pixel_neighbour)
-
-		glcm_matrix = (matrix_down  + matrix_up) 
-
-		return matrix_up, matrix_down, glcm_matrix
 
 	def vertical_relationship_probabilities(self, image_number, image_file_location, pixels_file_location):
 		"""
