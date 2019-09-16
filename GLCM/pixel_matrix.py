@@ -71,34 +71,6 @@ class CoOcurrencyMatrixVertical():
 		return "GLCM/matrix/percentage_matrix_image{}".format(image_number)
 
 class co_ocurrency_matrix_horizontal():
-	def horizontal_relationship(self, image, pixels):
-		"""
-		Get the horizontal relationship of grey pixels with a difference of one pixel
-		in the image and create the grey co-ocurrency matrix
-		
-		Args:
-			image (array): The image where the number of relationships will be obtained
-			pixels (array): An array with the set of pixels in the image
-
-		Returns:
-			matrix_left (array): The reference-neighbour relationship from west to east
-			matrix_right (array): The reference-neighbour relationship from east o west
-			glcm_matrix (array): The array of the relationships that happens
-								 in the given image
-		"""
-		
-		matrix_left = create_matrix(pixels)
-		matrix_right = create_matrix(pixels)
-
-		for pixel_reference in pixels:
-			for pixel_neighbour in pixels:
-				matrix_left[pixel_reference][pixel_neighbour] = self.pixel_relationship_left(image, pixel_reference, pixel_neighbour)
-				matrix_right[pixel_reference][pixel_neighbour] = self.pixel_relationship_right(image, pixel_reference, pixel_neighbour)
-
-		glcm_matrix = (matrix_left + matrix_right) 
-
-		return matrix_left, matrix_right, glcm_matrix
-
 	def horizontal_relationship_probabilities(self, image_number, image_file_location, pixels_file_location):
 		"""
 		Get the probability of the horizontal relationship of grey pixels in the image
