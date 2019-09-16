@@ -21,22 +21,6 @@ def number_of_pixels():
 	
 	return None
 
-def create_matrix(pixels):
-	"""
-	Create an empty co-occurrence matrix of the chosen image
-	
-	Args:
-		pixel (array): The image to get the diferent pixels
-
-	Returns:
-		co_ocurrence_matrix (matrix): An empty matrix with the size of the number
-									  of pixels of the image
-	"""
-	number_of_pixels = len(pixels)
-	co_ocurrence_matrix = numpy.zeros(shape=(number_of_pixels,number_of_pixels))
-	
-	return co_ocurrence_matrix
-
 class CoOcurrencyMatrixVertical():
 	"""
 	A grey level co-occurrence matrix is a histogram of co-occurring greyscale values
