@@ -43,28 +43,6 @@ class CoOcurrencyMatrixVertical():
 	at a given offset over an image.
 	"""
 
-	def pixel_relationship_down(self, image, reference, neighbour):
-		"""
-		Get the number of times the relationship between the given reference pixel and
-		neighnpur pixel occur in the image
-		
-		Args:
-			image (array): The image where the number of relationships will be obtained
-			reference (number): The reference pixel
-			neighbour (number): The neighbour pixel
-
-		Returns:
-			count (number): The number of times the relationship happens in the given image
-		"""
-		image_rows = image.shape[0]
-		image_columns = image.shape[1]
-		count = 0
-		for row in range(0, image_rows-1):
-			for column in range(0, image_columns):
-				if image[row][column] == reference and image[row+1][column] == neighbour :
-					count += 1
-		return count
-
 	def vertical_relationship_probabilities(self, image_number, image_file_location, pixels_file_location):
 		"""
 		Get the probability of the vertical relationship of grey pixels in the image
