@@ -1,6 +1,7 @@
 import numpy
 import cv2
-from GLCM.GLCM_helper_functions import string_array_to_int_array, redue
+from skimage import feature
+from GLCM.GLCM_helper_functions import string_array_to_int_array, reduce_images
 from helper_functions import read_text_files, write_text_files
 
 def number_of_pixels():
@@ -37,6 +38,10 @@ def create_matrix(pixels):
 	return co_ocurrence_matrix
 
 class CoOcurrencyMatrixVertical():
+	"""
+	A grey level co-occurrence matrix is a histogram of co-occurring greyscale values
+	at a given offset over an image.
+	"""
 	
 	def pixel_relationship_up(self, image, reference, neighbour):
 		"""
@@ -130,22 +135,14 @@ class CoOcurrencyMatrixVertical():
 		image = cv2.imread(image_file_location, 0)
 		image = reduce_images(image)
 
-		pixels = read_text_files(pixels_file_location)
-		pixels_array = string_array_to_int_array(pixels)
+		glcm_percentage_matrix = feature.greycomatrix(image=image, distances=[1],
+			angles=[0, numpy.pi/4, numpy.pi/2, 3*numpy.pi/4],
+				normed=True, symmetric=True, levels=255)
 		
-		vertical_relationships = self.vertical_relationship(image, pixels_array)
+		#write_text_files("GLCM/matrix/percentage_matrix_image{}".format(image_number), glcm_percentage_matrix)
+		numpy.savetxt("GLCM/matrix/glcm_percentage_matrix_image{}_1.txt".format(image_number), glcm_percentage_matrix[:, :, 0, 0])
 
-		matrix_up = vertical_relationships[0]
-		matrix_down = vertical_relationships[1]
-		glcm_matrix = vertical_relationships[2]
-		
-		number_of_relationships = float((matrix_up.shape[0]-1)*matrix_up.shape[1]) + float((matrix_down.shape[0]-1)*matrix_down.shape[1])
-		glcm_percentage_matrix = glcm_matrix * (1.0/number_of_relationships)
-		glcm_percentage_matrix = numpy.around(glcm_percentage_matrix, decimals=3)
-
-		write_text_files("GLCM/matrix/percentage_matrix_image{}".format(image_number), glcm_percentage_matrix)
-
-		return glcm_percentage_matrix
+		return "GLCM/matrix/percentage_matrix_image{}".format(image_number)
 
 class co_ocurrency_matrix_horizontal():
 	def pixel_relationship_right(self, image, reference, neighbour):
