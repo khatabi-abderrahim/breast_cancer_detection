@@ -4,23 +4,6 @@ from skimage import feature
 from GLCM.GLCM_helper_functions import string_array_to_int_array, reduce_images
 from helper_functions import read_text_files, write_text_files
 
-def number_of_pixels():
-	"""
-	Get the number of the different pixels from the images in the dataset and
-	store them in text files
-
-	Returns:
-		None: There is no variable return in this functio, it is all stored
-		in text files.
-	"""
-	for number in range(1,322):
-		image = cv2.imread("all-mias/mdb{}.pgm".format(number),0)
-		one_dimensional_image = list(cv2.imread('all-mias/mdb1.pgm',0).flatten())
-		one_dimensional_image = list(set(one_dimensional_image))
-		write_text_files("GLCM/pixels/mdb{}.txt".format(number), one_dimensional_image)
-	
-	return None
-
 class CoOcurrencyMatrixVertical():
 	"""
 	A grey level co-occurrence matrix is a histogram of co-occurring greyscale values
