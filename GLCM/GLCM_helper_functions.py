@@ -1,7 +1,7 @@
 import cv2
 import numpy
 
-def redude_images(image):
+def reduce_images(image):
 	"""
 	Takes an image and reduces its black square spots
 
@@ -32,14 +32,18 @@ def string_array_to_int_array(string_array):
 	Returns:
 		string_array (array): An integer element array.
 	"""
-	
-	string_array[0] = string_array[0].replace("[","")
-	string_array[0] = string_array[0].replace("]","")
-	string_array = string_array[0].split(",")
 
-	for string_element in string_array:
-		string_element = string_element.replace(" ","")
+	for array_element in range(0,len(string_array)):
+		string_array[array_element] = string_array[array_element].replace("[","")
+		string_array[array_element] = string_array[array_element].replace("]"," ")
+		string_array[array_element] = string_array[array_element].replace("  ",",")
+		string_array[array_element] = string_array[array_element].replace(" ",",")
+		string_array[array_element] = string_array[array_element].split(',')
+		
+		for index, element in enumerate(string_array[array_element]):
+			if len(element) == 0:
+				del string_array[array_element][index]
 
-	number_array = [int(string_element, base=16) for string_element in string_array] 
+		string_array[array_element] = [float(string_element) for string_element in string_array[array_element]]
 
-	return number_array
+	return string_array
