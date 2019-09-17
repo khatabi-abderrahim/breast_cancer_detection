@@ -16,12 +16,13 @@ def read_text_files(link_to_file):
 
 def write_text_files(link_to_file, result_data):
 	"""
-	Write a text file with the given location and information
+	Write a text file with the given location and information. Open the file in
+	apending mode, to add new data to the end of the file
 
 	Arguments:
 		link_to_file (String): The string containing the link to the file
 	"""
-	file = open(link_to_file,"w")
+	file = open(filename=link_to_file, mode="a")
 	file.write(str(result_data))
 	file.close()
 
