@@ -2,6 +2,7 @@ from skimage import feature
 import numpy
 import math
 from GLCM.pixel_matrix import CoOcurrencyMatrix
+from helper_functions import write_text_files
 
 class TextureMeasurements():
 	"""
@@ -31,13 +32,15 @@ class TextureMeasurements():
 		"""
 		glcm_percentage_matrix = CoOcurrencyMatrix().relationship_probabilities(image_file_location)
 		contrast = feature.greycoprops(glcm_percentage_matrix, prop='contrast')
-		numpy.savetxt("GLCM/matrix/contrast_mdb{}.txt".format(image_number), contrast)
+		write_text_files("GLCM/matrix/contrast.txt", contrast)
 
 		return "GLCM/matrix/contrast_mdb{}.txt".format(image_number)
 
-	def energy_measurements(self, glcm_percentage_matrix, pixel_set):
+	def energy_measurements(self, image_number, image_file_location):
 		"""
 		Get the energy measurements of the image from the glcm percentage matrix.
+		feature.greycoprops(prop='energy'): The tecture property to be 
+											  calculated from the GLCM matrix
 		
 		Args:
 			glcm_percentage_matrix (array): The percentage of the relationship between
@@ -45,12 +48,11 @@ class TextureMeasurements():
 			pixel_set (array): An array with the set of pixels in the image
 
 		Returns:
-			energy (number): The contrast probability level of the image
+			(string): The location of where the energy information 
+					  of the matrix will be saved
 		"""
-		energy = 0
+		glcm_percentage_matrix = CoOcurrencyMatrix().relationship_probabilities(image_file_location)
+		contrast = feature.greycoprops(glcm_percentage_matrix, prop='energy')
+		write_text_files("GLCM/matrix/energy.txt", contrast)
 
-		for reference in pixel_set:
-			for neighbour in pixel_set:
-				energy += math.pow(glcm_percentage_matrix[reference][neighbour],2)
-
-		return energy
+		return "GLCM/matrix/energy_mdb{}.txt".format(image_number)
