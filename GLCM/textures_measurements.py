@@ -37,7 +37,7 @@ class TextureMeasurements():
 
 		return "GLCM/matrix/textures_mdb{}.txt".format(image_number)
 
-	def contrast_measurements(self, image_number, image_file_location):
+	def contrast_measurements(self, glcm_percentage_matrix):
 		"""
 		Get the contrast measurements of the image from the glcm percentage matrix.
 		Contrast measures the  amount  of local  variation  in  the  image.
@@ -47,16 +47,14 @@ class TextureMeasurements():
 		Args:
 			glcm_percentage_matrix (array): The percentage of the relationship between
 											two pixels in the image
-			image_number (number): A number that identifies the image to be analyzed
-		Returns:
-			(string): The location of where the contrast information 
-					  of the matrix will be saved
-		"""
-		glcm_percentage_matrix = CoOcurrencyMatrix().relationship_probabilities(image_file_location)
-		contrast = feature.greycoprops(glcm_percentage_matrix, prop='contrast')
-		write_text_files("GLCM/matrix/contrast.txt", contrast)
 
-		return "GLCM/matrix/contrast_mdb{}.txt".format(image_number)
+		Returns:
+			contrast (array): The contrast measurements of the GLCM with vertical
+							  and horizontal direction.
+		"""
+		contrast = feature.greycoprops(glcm_percentage_matrix, prop='contrast')
+
+		return contrast
 
 	def energy_measurements(self, image_number, image_file_location):
 		"""
