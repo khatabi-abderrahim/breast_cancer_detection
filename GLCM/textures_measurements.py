@@ -13,6 +13,29 @@ class TextureMeasurements():
 	measures the closeness of the distribution of elements in the GLCM to the GLCM
 	diagonal and range will be in [0 1].
 	"""
+	def save_texture_measurements(self, image_number, image_file_location):
+		"""
+		From the GLCM matrix, calculate the texture measurements (contrast, energy)
+		and save them in a text file
+
+		Args:
+			image_number (number): A number that identifies the image to be analyzed
+			image_file_location (string): The location where the image is stored
+
+		Returns:
+			(string): The location of where the contrast information 
+					  of the matrix will be saved
+		"""
+		glcm_percentage_matrix = CoOcurrencyMatrix().relationship_probabilities(image_file_location)
+
+		contrast = self.contrast_measurements(glcm_percentage_matrix)
+		energy = self.energy_measurements(glcm_percentage_matrix)
+
+		textures = numpy.concatenate((contrast,energy),axis=1)
+
+		write_text_files("GLCM/matrix/textures_mdb{}.txt".format(image_number), textures)
+
+		return "GLCM/matrix/textures_mdb{}.txt".format(image_number)
 
 	def contrast_measurements(self, image_number, image_file_location):
 		"""
@@ -25,7 +48,6 @@ class TextureMeasurements():
 			glcm_percentage_matrix (array): The percentage of the relationship between
 											two pixels in the image
 			image_number (number): A number that identifies the image to be analyzed
-
 		Returns:
 			(string): The location of where the contrast information 
 					  of the matrix will be saved
@@ -46,7 +68,6 @@ class TextureMeasurements():
 			glcm_percentage_matrix (array): The percentage of the relationship between
 											two pixels in the image
 			pixel_set (array): An array with the set of pixels in the image
-
 		Returns:
 			(string): The location of where the energy information 
 					  of the matrix will be saved
