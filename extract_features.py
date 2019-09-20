@@ -1,6 +1,6 @@
 import cv2
 import numpy
-from tasks import get_vertical_glcm_matrix
+from tasks import get_texture_glcm_measurements
 
 """
 Script to extract the features from the image
@@ -9,7 +9,7 @@ Script to extract the features from the image
 Call the function that will delegate the GLCM vertical relationship
 calculations in an asynchronous way.
 """
-image_number = 1
 
-image_file_location = "all-mias/mdb{}.pgm".format(image_number)
-get_vertical_glcm_matrix.delay(image_number, image_file_location)
+for image_number in range(1,3):
+	image_file_location = "all-mias/mdb{}.pgm".format(image_number)
+	get_texture_glcm_measurements.delay(image_number, image_file_location)
