@@ -56,7 +56,7 @@ class TextureMeasurements():
 
 		return contrast
 
-	def energy_measurements(self, image_number, image_file_location):
+	def energy_measurements(self, glcm_percentage_matrix):
 		"""
 		Get the energy measurements of the image from the glcm percentage matrix.
 		feature.greycoprops(prop='energy'): The tecture property to be 
@@ -65,13 +65,11 @@ class TextureMeasurements():
 		Args:
 			glcm_percentage_matrix (array): The percentage of the relationship between
 											two pixels in the image
-			pixel_set (array): An array with the set of pixels in the image
-		Returns:
-			(string): The location of where the energy information 
-					  of the matrix will be saved
-		"""
-		glcm_percentage_matrix = CoOcurrencyMatrix().relationship_probabilities(image_file_location)
-		contrast = feature.greycoprops(glcm_percentage_matrix, prop='energy')
-		write_text_files("GLCM/matrix/energy.txt", contrast)
 
-		return "GLCM/matrix/energy_mdb{}.txt".format(image_number)
+		Returns:
+			energu (array): The energy measurements of the GLCM with vertical
+							  and horizontal direction.
+		"""
+		energy = feature.greycoprops(glcm_percentage_matrix, prop='energy')
+
+		return energy
