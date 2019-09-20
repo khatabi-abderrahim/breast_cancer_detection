@@ -30,8 +30,9 @@ class TextureMeasurements():
 
 		contrast = self.contrast_measurements(glcm_percentage_matrix)
 		energy = self.energy_measurements(glcm_percentage_matrix)
+		dissimilarity = self.dissimilarity_measurements(glcm_percentage_matrix)
 
-		textures = numpy.concatenate((contrast,energy),axis=1)
+		textures = numpy.concatenate((contrast,energy,dissimilarity),axis=1)
 
 		write_text_files("GLCM/matrix/textures_mdb{}.txt".format(image_number), textures)
 
@@ -41,7 +42,7 @@ class TextureMeasurements():
 		"""
 		Get the contrast measurements of the image from the glcm percentage matrix.
 		Contrast measures the  amount  of local  variation  in  the  image.
-		feature.greycoprops(prop='contrast'): The tecture property to be 
+		feature.greycoprops(prop='contrast'): The texture property to be 
 											  calculated from the GLCM matrix
 		
 		Args:
@@ -59,7 +60,7 @@ class TextureMeasurements():
 	def energy_measurements(self, glcm_percentage_matrix):
 		"""
 		Get the energy measurements of the image from the glcm percentage matrix.
-		feature.greycoprops(prop='energy'): The tecture property to be 
+		feature.greycoprops(prop='energy'): The texture property to be 
 											  calculated from the GLCM matrix
 		
 		Args:
@@ -67,9 +68,27 @@ class TextureMeasurements():
 											two pixels in the image
 
 		Returns:
-			energu (array): The energy measurements of the GLCM with vertical
+			energy (array): The energy measurements of the GLCM with vertical
 							  and horizontal direction.
 		"""
 		energy = feature.greycoprops(glcm_percentage_matrix, prop='energy')
 
 		return energy
+
+	def dissimilarity_measurements(self, glcm_percentage_matrix):
+		"""
+		Get the dissimilarity measurements of the image from the glcm percentage matrix.
+		feature.greycoprops(prop='dissimilarity'): The texture property to be 
+											  calculated from the GLCM matrix
+		
+		Args:
+			glcm_percentage_matrix (array): The percentage of the relationship between
+											two pixels in the image
+
+		Returns:
+			energy (array): The energy measurements of the GLCM with vertical
+							  and horizontal direction.
+		"""
+		dissimilarity = feature.greycoprops(glcm_percentage_matrix, prop='dissimilarity')
+
+		return dissimilarity
