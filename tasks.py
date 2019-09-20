@@ -16,8 +16,8 @@ def get_texture_glcm_measurements(image_number, image_file_location):
 		image_number (number): A number that identifies the image to be analyzed
 
 	Returns:
-		result (string): Returns the 
+		result (string): Returns a string where the result will be located as a text file.
 	"""	
-	result = TextureMeasurements().contrast_measurements(image_number, image_file_location)
+	result = TextureMeasurements().save_texture_measurements(image_number, image_file_location)
 
 	return result
