@@ -8,7 +8,7 @@ def read_text_files(link_to_file):
 	Returns:
 		read_file (String): The infomration gotten from the image
 	"""
-	file = open(link_to_file,"r")
+	file = open(file=link_to_file,mode="r")
 	read_file = file.readlines()
 	file.close()
 
@@ -22,7 +22,7 @@ def write_text_files(link_to_file, result_data):
 	Arguments:
 		link_to_file (String): The string containing the link to the file
 	"""
-	file = open(filename=link_to_file, mode="a")
+	file = open(file=link_to_file, mode="a")
 	file.write(str(result_data))
 	file.close()
 
