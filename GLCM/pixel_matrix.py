@@ -22,7 +22,6 @@ class CoOcurrencyMatrix():
 		"""
 		# Reads the image from the fila
 		image = cv2.imread(image_file_location, 0)
-		image = reduce_images(image)
 
 		glcm_percentage_matrix = feature.greycomatrix(image=image, distances=[1],
 			angles=[0, numpy.pi/4, numpy.pi/2, 3*numpy.pi/4],
