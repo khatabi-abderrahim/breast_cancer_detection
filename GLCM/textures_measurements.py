@@ -32,7 +32,7 @@ class TextureMeasurements():
 		energy = self.energy_measurements(glcm_percentage_matrix)
 		dissimilarity = self.dissimilarity_measurements(glcm_percentage_matrix)
 
-		textures = numpy.concatenate((contrast,energy,dissimilarity),axis=1)
+		textures = numpy.concatenate((contrast,energy,dissimilarity),axis=0)
 
 		write_text_files("GLCM/matrix/textures_mdb{}.txt".format(image_number), textures)
 
@@ -53,7 +53,7 @@ class TextureMeasurements():
 			contrast (array): The contrast measurements of the GLCM with vertical
 							  and horizontal direction.
 		"""
-		contrast = feature.greycoprops(glcm_percentage_matrix, prop='contrast')
+		contrast = feature.greycoprops(glcm_percentage_matrix, prop='contrast').flatten()
 
 		return contrast
 
@@ -71,7 +71,7 @@ class TextureMeasurements():
 			energy (array): The energy measurements of the GLCM with vertical
 							  and horizontal direction.
 		"""
-		energy = feature.greycoprops(glcm_percentage_matrix, prop='energy')
+		energy = feature.greycoprops(glcm_percentage_matrix, prop='energy').flatten()
 
 		return energy
 
@@ -89,6 +89,6 @@ class TextureMeasurements():
 			energy (array): The energy measurements of the GLCM with vertical
 							  and horizontal direction.
 		"""
-		dissimilarity = feature.greycoprops(glcm_percentage_matrix, prop='dissimilarity')
+		dissimilarity = feature.greycoprops(glcm_percentage_matrix, prop='dissimilarity').flatten()
 
 		return dissimilarity
