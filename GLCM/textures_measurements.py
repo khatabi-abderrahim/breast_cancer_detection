@@ -31,8 +31,9 @@ class TextureMeasurements():
 		contrast = self.contrast_measurements(glcm_percentage_matrix)
 		energy = self.energy_measurements(glcm_percentage_matrix)
 		dissimilarity = self.dissimilarity_measurements(glcm_percentage_matrix)
+		homogeneity = self.dissimilarity_measurements(glcm_percentage_matrix)
 
-		textures = numpy.concatenate((contrast,energy,dissimilarity),axis=0)
+		textures = numpy.concatenate((contrast,energy,dissimilarity,homogeneity),axis=0)
 
 		write_text_files("GLCM/matrix/textures_mdb{}.txt".format(image_number), textures)
 
@@ -50,8 +51,8 @@ class TextureMeasurements():
 											two pixels in the image
 
 		Returns:
-			contrast (array): The contrast measurements of the GLCM with vertical
-							  and horizontal direction.
+			contrast (array): A 2D array with contrast measurements of the GLCM with
+							  vertical and horizontal direction.
 		"""
 		contrast = feature.greycoprops(glcm_percentage_matrix, prop='contrast').flatten()
 
@@ -68,7 +69,7 @@ class TextureMeasurements():
 											two pixels in the image
 
 		Returns:
-			energy (array): The energy measurements of the GLCM with vertical
+			energy (array): A 2D array with energy measurements of the GLCM with vertical
 							  and horizontal direction.
 		"""
 		energy = feature.greycoprops(glcm_percentage_matrix, prop='energy').flatten()
@@ -86,9 +87,27 @@ class TextureMeasurements():
 											two pixels in the image
 
 		Returns:
-			energy (array): The energy measurements of the GLCM with vertical
+			energy (array): A 2D array with energy measurements of the GLCM with vertical
 							  and horizontal direction.
 		"""
 		dissimilarity = feature.greycoprops(glcm_percentage_matrix, prop='dissimilarity').flatten()
 
 		return dissimilarity
+
+	def homogeneity_measurements():
+		"""
+		Get the homogeneity measurements of the image from the glcm percentage matrix.
+		feature.greycoprops(prop='homogeneity'): The texture property to be 
+											  calculated from the GLCM matrix
+		
+		Args:
+			glcm_percentage_matrix (array): The percentage of the relationship between
+											two pixels in the image
+
+		Returns:
+			homogeneity (array): A 2D array with the homogeneity measurements of the GLCM
+							     with vertical and horizontal direction.
+		"""
+		homogeneity = feature.greycoprops(glcm_percentage_matrix, prop='homogeneity').flatten()
+
+		return homogeneity		
