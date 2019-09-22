@@ -1,7 +1,6 @@
 import numpy
 import cv2
 from skimage import feature
-from GLCM.GLCM_helper_functions import reduce_images
 
 class CoOcurrencyMatrix():
 	"""
