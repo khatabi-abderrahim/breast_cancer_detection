@@ -31,8 +31,8 @@ class TextureMeasurements():
 
 		contrast = self.extract_texture_measurement(glcm_percentage_matrix, 'contrast')
 		energy = self.extract_texture_measurement(glcm_percentage_matrix, 'energy')
-		dissimilarity = self.extract_texture_measurement(glcm_percentage_matrix, 'dissimilarity ')
-		homogeneity = self.dissimilarity_measurements(glcm_percentage_matrix)
+		dissimilarity = self.extract_texture_measurement(glcm_percentage_matrix, 'dissimilarity')
+		homogeneity = self.extract_texture_measurement(glcm_percentage_matrix, 'homogeneity')
 
 		textures = numpy.concatenate((contrast,energy,dissimilarity,homogeneity),axis=0)
 
@@ -58,22 +58,4 @@ class TextureMeasurements():
 		
 		extracted_texture = feature.greycoprops(glcm_percentage_matrix, prop=texture).flatten()
 
-		return extracted_texture
-
-	def homogeneity_measurements(self, glcm_percentage_matrix):
-		"""
-		Get the homogeneity measurements of the image from the glcm percentage matrix.
-		feature.greycoprops(prop='homogeneity'): The texture property to be 
-											  calculated from the GLCM matrix
-		
-		Args:
-			glcm_percentage_matrix (array): The percentage of the relationship between
-											two pixels in the image
-
-		Returns:
-			homogeneity (array): A 2D array with the homogeneity measurements of the GLCM
-							     with vertical and horizontal direction.
-		"""
-		homogeneity = feature.greycoprops(glcm_percentage_matrix, prop='homogeneity').flatten()
-
-		return homogeneity		
+		return extracted_texture	
