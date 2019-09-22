@@ -60,26 +60,6 @@ class TextureMeasurements():
 
 		return extracted_texture
 
-
-	def contrast_measurements(self, glcm_percentage_matrix):
-		"""
-		Get the contrast measurements of the image from the glcm percentage matrix.
-		Contrast measures the  amount  of local  variation  in  the  image.
-		feature.greycoprops(prop='contrast'): The texture property to be 
-											  calculated from the GLCM matrix
-		
-		Args:
-			glcm_percentage_matrix (array): The percentage of the relationship between
-											two pixels in the image
-
-		Returns:
-			contrast (array): A 2D array with contrast measurements of the GLCM with
-							  vertical and horizontal direction.
-		"""
-		contrast = feature.greycoprops(glcm_percentage_matrix, prop='contrast').flatten()
-
-		return contrast
-
 	def energy_measurements(self, glcm_percentage_matrix):
 		"""
 		Get the energy measurements of the image from the glcm percentage matrix.
