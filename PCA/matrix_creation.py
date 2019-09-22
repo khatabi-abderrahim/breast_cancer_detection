@@ -26,4 +26,17 @@ class  MatrixCreation():
 		return file_data  
 
 	def create_matrix(self):
-		pass	
+		"""
+		Constructs a matrix with every texture data from the image dataset to later
+		calculate the Principal Components Analyisis
+
+		Returns:
+			texture_matrix(array): A two dimensional array with the texture measurements of the
+							       entire dataset
+		"""
+		texture_matrix = self.extract_data(image_number=1)
+
+		for image in range(2,323):
+			texture_matrix = numpy.append(texture_matrix, self.extract_data(image_number=image), axis=0)
+
+		return texture_matrix
