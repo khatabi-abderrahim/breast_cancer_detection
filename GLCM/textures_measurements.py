@@ -60,24 +60,6 @@ class TextureMeasurements():
 
 		return extracted_texture
 
-	def energy_measurements(self, glcm_percentage_matrix):
-		"""
-		Get the energy measurements of the image from the glcm percentage matrix.
-		feature.greycoprops(prop='energy'): The texture property to be 
-											  calculated from the GLCM matrix
-		
-		Args:
-			glcm_percentage_matrix (array): The percentage of the relationship between
-											two pixels in the image
-
-		Returns:
-			energy (array): A 2D array with energy measurements of the GLCM with vertical
-							  and horizontal direction.
-		"""
-		energy = feature.greycoprops(glcm_percentage_matrix, prop='energy').flatten()
-
-		return energy
-
 	def dissimilarity_measurements(self, glcm_percentage_matrix):
 		"""
 		Get the dissimilarity measurements of the image from the glcm percentage matrix.
