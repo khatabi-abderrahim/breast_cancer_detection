@@ -17,6 +17,7 @@ class TextureMeasurements():
 		"""
 		From the GLCM matrix, calculate the texture measurements (contrast, energy)
 		and save them in a text file
+		Contrast: Measures the  amount  of local  variation  in  the  image.
 
 		Args:
 			image_number (number): A number that identifies the image to be analyzed
@@ -28,7 +29,7 @@ class TextureMeasurements():
 		"""
 		glcm_percentage_matrix = CoOcurrencyMatrix().relationship_probabilities(image_file_location)
 
-		contrast = self.contrast_measurements(glcm_percentage_matrix)
+		contrast = self.extract_texture_measurement(glcm_percentage_matrix, 'contrast')
 		energy = self.energy_measurements(glcm_percentage_matrix)
 		dissimilarity = self.dissimilarity_measurements(glcm_percentage_matrix)
 		homogeneity = self.dissimilarity_measurements(glcm_percentage_matrix)
@@ -38,6 +39,27 @@ class TextureMeasurements():
 		write_text_files("GLCM/matrix/textures_mdb{}.txt".format(image_number), textures)
 
 		return "GLCM/matrix/textures_mdb{}.txt".format(image_number)
+
+	def extract_texture_measurement(self, glcm_percentage_matrix, texture):
+		"""
+		Extract the texture measurements of the image from the four glcm percentage
+		matrix vertical and horizontal direction.
+		
+		Args:
+			glcm_percentage_matrix (array): The percentage of the relationship between
+											two pixels in the image
+			texture (string): The texture property to be calculated from the GLCM matrix
+
+		Returns:
+			extracted_texture (array): The texture measurements of the GLCM with
+							  		   vertical and horizontal direction.
+		"""
+
+		
+		extracted_texture = feature.greycoprops(glcm_percentage_matrix, prop=texture).flatten()
+
+		return extracted_texture
+
 
 	def contrast_measurements(self, glcm_percentage_matrix):
 		"""
@@ -94,7 +116,7 @@ class TextureMeasurements():
 
 		return dissimilarity
 
-	def homogeneity_measurements():
+	def homogeneity_measurements(self, glcm_percentage_matrix):
 		"""
 		Get the homogeneity measurements of the image from the glcm percentage matrix.
 		feature.greycoprops(prop='homogeneity'): The texture property to be 
