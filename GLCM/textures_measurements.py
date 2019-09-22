@@ -33,8 +33,10 @@ class TextureMeasurements():
 		energy = self.extract_texture_measurement(glcm_percentage_matrix, 'energy')
 		dissimilarity = self.extract_texture_measurement(glcm_percentage_matrix, 'dissimilarity')
 		homogeneity = self.extract_texture_measurement(glcm_percentage_matrix, 'homogeneity')
+		correlation = self.extract_texture_measurement(glcm_percentage_matrix, 'correlation')
+		asm = self.extract_texture_measurement(glcm_percentage_matrix, 'ASM')
 
-		textures = numpy.concatenate((contrast,energy,dissimilarity,homogeneity),axis=0)
+		textures = numpy.concatenate((contrast,energy,dissimilarity,homogeneity,correlation, asm),axis=0)
 
 		write_text_files("GLCM/matrix/textures_mdb{}.txt".format(image_number), textures)
 
