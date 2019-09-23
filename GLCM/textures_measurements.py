@@ -1,6 +1,5 @@
 from skimage import feature
 import numpy
-import math
 from GLCM.pixel_matrix import CoOcurrencyMatrix
 from helper_functions import write_text_files
 
@@ -29,16 +28,16 @@ class TextureMeasurements():
 		"""
 		glcm_percentage_matrix = CoOcurrencyMatrix().relationship_probabilities(image_file_location)
 
-		contrast = self.extract_texture_measurement(glcm_percentage_matrix, 'contrast')
-		energy = self.extract_texture_measurement(glcm_percentage_matrix, 'energy')
-		dissimilarity = self.extract_texture_measurement(glcm_percentage_matrix, 'dissimilarity')
-		homogeneity = self.extract_texture_measurement(glcm_percentage_matrix, 'homogeneity')
-		correlation = self.extract_texture_measurement(glcm_percentage_matrix, 'correlation')
-		asm = self.extract_texture_measurement(glcm_percentage_matrix, 'ASM')
+		contrast = self.extract_texture_measurement(glcm_percentage_matrix, texture='contrast')
+		energy = self.extract_texture_measurement(glcm_percentage_matrix, texture='energy')
+		dissimilarity = self.extract_texture_measurement(glcm_percentage_matrix, texture='dissimilarity')
+		homogeneity = self.extract_texture_measurement(glcm_percentage_matrix, texture='homogeneity')
+		correlation = self.extract_texture_measurement(glcm_percentage_matrix, texture='correlation')
+		asm = self.extract_texture_measurement(glcm_percentage_matrix, texture='ASM')
 
 		textures = numpy.concatenate((contrast,energy,dissimilarity,homogeneity,correlation, asm),axis=0)
 
-		write_text_files("GLCM/matrix/textures_mdb{}.txt".format(image_number), textures)
+		write_text_files(link_to_file="GLCM/matrix/textures_mdb{}.txt".format(image_number), result_data=textures)
 
 		return "GLCM/matrix/textures_mdb{}.txt".format(image_number)
 
@@ -56,8 +55,6 @@ class TextureMeasurements():
 			extracted_texture (array): The texture measurements of the GLCM with
 							  		   vertical and horizontal direction.
 		"""
-
-		
 		extracted_texture = feature.greycoprops(glcm_percentage_matrix, prop=texture).flatten()
 
 		return extracted_texture	
