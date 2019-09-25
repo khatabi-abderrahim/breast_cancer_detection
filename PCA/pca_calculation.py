@@ -55,7 +55,7 @@ class PCACalculation():
 			eigen_vectors (matrix):  Matrix with the singular vectors (Q)
 		"""
 
-		unitary_values, eigen_values, eigen_vectors = numpy.linalg.svd(standardized_variables, full_matrices=True)
+		unitary_values, eigen_values, eigen_vectors = numpy.linalg.svd(standardized_variables)
 
 		unitary_values = numpy.round(unitary_values,3)
 		eigen_values = numpy.round(eigen_values,3)
@@ -108,8 +108,7 @@ class PCACalculation():
 		Returns:
 			score_values (matrix):
 		"""
-		scores_values = numpy.dot(standardized_variables, eigen_vectors)
-		scores_values = numpy.round(scores_values, 3)
+		scores_values = numpy.dot(standardized_variables,eigen_vectors)
 		
 		return scores_values
 
@@ -124,9 +123,16 @@ class PCACalculation():
 			scores (2D array):
 		"""
 		standard_values = self.calculate_standardized_variables(glcm_texture_measurements)
+		print(standard_values)
 		single_value_decomposition = self.calculate_singular_value_decomposition(standardized_variables=standard_values)
 		variance_vectors = self.calculate_variance_vector(eigen_values=single_value_decomposition[1], number_of_rows=glcm_texture_measurements.shape[0])
 		loadings = self.calculate_loadings(variance_vectors=variance_vectors, eigen_vectors=single_value_decomposition[2])
+		print("unitary values")
+		print(single_value_decomposition[0])
+		print("Eigenvalues")
+		print(single_value_decomposition[1])
+		print("Eigenvectors")
+		print(single_value_decomposition[2])
 		scores = self.calculate_scores(standardized_variables=standard_values , eigen_vectors=single_value_decomposition[2])
 		
 		return scores 
