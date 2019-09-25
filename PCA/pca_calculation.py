@@ -39,6 +39,8 @@ class PCACalculation():
 		"""
 		unitary_values, eigen_values, eigen_vectors = numpy.linalg.svd(standardized_variables)
 		
+		eigen_vectors = numpy.transpose(eigen_vectors)
+
 		return unitary_values, eigen_values, eigen_vectors
 
 	def calculate_variance_vector(self, eigen_values, number_of_rows):
