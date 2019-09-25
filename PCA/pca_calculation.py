@@ -21,9 +21,7 @@ class PCACalculation():
 		
 		for row in range(0,glcm_texture_measurements.shape[0]):
 			for column in range(0,glcm_texture_measurements.shape[1]):
-				standardized_variables[row][column] = (glcm_texture_measurements[row][column] - round(glcm_texture_measurements[:,column].mean(),5))/round(glcm_texture_measurements[:,column].std(ddof=1),5)
-
-		standardized_variables = numpy.round(standardized_variables,3)
+				standardized_variables[row][column] = (glcm_texture_measurements[row][column] - glcm_texture_measurements[:,column].mean())/glcm_texture_measurements[:,column].std(ddof=1)
 
 		return standardized_variables
 
@@ -39,12 +37,7 @@ class PCACalculation():
 			eigen_values (matrix):  Matrix with the singular values (D)
 			eigen_vectors (matrix):  Matrix with the singular vectors (Q)
 		"""
-
 		unitary_values, eigen_values, eigen_vectors = numpy.linalg.svd(standardized_variables)
-
-		unitary_values = numpy.round(unitary_values,3)
-		eigen_values = numpy.round(eigen_values,3)
-		eigen_vectors = numpy.round(eigen_vectors,3)
 		
 		return unitary_values, eigen_values, eigen_vectors
 
@@ -59,9 +52,7 @@ class PCACalculation():
 		Resutrns:
 			variance_vector (matrix): 
 		"""
-
 		variance_vector = eigen_values/numpy.sqrt(number_of_rows-1)
-		variance_vector = numpy.round(variance_vector,5)
 
 		return variance_vector
 
@@ -78,7 +69,7 @@ class PCACalculation():
 		loadings = numpy.zeros(shape=(eigen_vectors.shape))
 
 		for column in range(0,len(variance_vectors)-1):
-			loadings[:,column] = numpy.round((eigen_vectors[:,column] * variance_vectors[column]),4)
+			loadings[:,column] = eigen_vectors[:,column] * variance_vectors[column]
 
 		return loadings
 
