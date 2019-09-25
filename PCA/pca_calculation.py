@@ -27,21 +27,6 @@ class PCACalculation():
 
 		return standardized_variables
 
-	def calculate_correlation_matrix(self, unified_measurements):
-		"""
-		Multiplies the unified variables matrix by it's transpose
-
-		Args:
-			unified_measurements (array): The unified GLCM measurements
-
-		Returns:
-			correlation_matrix (array): The resultant matrix multiplication
-		"""
-		correlation_matrix = numpy.dot(unified_measurements.transpose(),unified_measurements)
-		correlation_matrix = numpy.round(correlation_matrix,3)
-
-		return correlation_matrix
-
 	def calculate_singular_value_decomposition(self, standardized_variables):
 		"""
 		It is the generalization of the eigendecomposition of a positive normal matrix
@@ -108,9 +93,24 @@ class PCACalculation():
 		Returns:
 			score_values (matrix):
 		"""
-		scores_values = numpy.dot(standardized_variables,eigen_vectors)
+		#scores_values = numpy.dot(standardized_variables,eigen_vectors)
+		scores_values = numpy.matmul(standardized_variables,eigen_vectors)
 		
 		return scores_values
+
+	def calculate_square_cosines(self, loadings):
+		"""
+		Calculate square cosines
+
+		Arguments:
+			loadings (matrix)
+
+		Returns:
+			square_cosines (matrix)
+		"""
+		square_cosines = numpy.square(loadings)
+
+		return square_cosines
 
 	def calculate_principal_components(self, glcm_texture_measurements):
 		"""
@@ -122,17 +122,11 @@ class PCACalculation():
 		Returns:
 			scores (2D array):
 		"""
-		standard_values = self.calculate_standardized_variables(glcm_texture_measurements)
-		print(standard_values)
+		standard_values = self.calculate_standardized_variables(glcm_texture_measurements=glcm_texture_measurements)
 		single_value_decomposition = self.calculate_singular_value_decomposition(standardized_variables=standard_values)
 		variance_vectors = self.calculate_variance_vector(eigen_values=single_value_decomposition[1], number_of_rows=glcm_texture_measurements.shape[0])
 		loadings = self.calculate_loadings(variance_vectors=variance_vectors, eigen_vectors=single_value_decomposition[2])
-		print("unitary values")
-		print(single_value_decomposition[0])
-		print("Eigenvalues")
-		print(single_value_decomposition[1])
-		print("Eigenvectors")
-		print(single_value_decomposition[2])
 		scores = self.calculate_scores(standardized_variables=standard_values , eigen_vectors=single_value_decomposition[2])
-		
-		return scores 
+		square_cosines = self.calculate_square_cosines(loadings=loadings)
+
+		return square_cosines
