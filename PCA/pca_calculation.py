@@ -1,11 +1,13 @@
 import numpy
+from sklearn.preprocessing import StandardScaler
+from PCA.matrix_creation import MatrixCreation
 
 class PCACalculation():
 	"""
 	Calculate the principal components from the GLCM measurements to validate wich
 	one of them will be able to predict if the image has a malformation
 	"""
-	def calculate_standardized_variables(self, glcm_measurements):
+	def calculate_standardized_variables(self, glcm_texture_measurements):
 		"""
 		First unify each variable from the matrix
 
@@ -15,13 +17,11 @@ class PCACalculation():
 		Returns:
 			standardized_measurements (array): The unified GLCM measurements 
 		"""
-		glcm_measurements = numpy.array(glcm_measurements)
-
-		standardized_variables = numpy.zeros(shape=(glcm_measurements.shape))
-
-		for row in range(0,glcm_measurements.shape[0]):
-			for column in range(0,glcm_measurements.shape[1]):
-				standardized_variables[row][column] = (glcm_measurements[row][column] - round(glcm_measurements[:,column].mean(),5))/round(glcm_measurements[:,column].std(ddof=1),5)
+		standardized_variables = numpy.zeros(shape=(glcm_texture_measurements.shape))
+		
+		for row in range(0,glcm_texture_measurements.shape[0]):
+			for column in range(0,glcm_texture_measurements.shape[1]):
+				standardized_variables[row][column] = (glcm_texture_measurements[row][column] - round(glcm_texture_measurements[:,column].mean(),5))/round(glcm_texture_measurements[:,column].std(ddof=1),5)
 
 		standardized_variables = numpy.round(standardized_variables,3)
 
@@ -42,7 +42,7 @@ class PCACalculation():
 
 		return correlation_matrix
 
-	def calculate_singular_value_decomposition(self, unified_measurements):
+	def calculate_singular_value_decomposition(self, standardized_variables):
 		"""
 		It is the generalization of the eigendecomposition of a positive normal matrix
 
@@ -55,13 +55,13 @@ class PCACalculation():
 			eigen_vectors (matrix):  Matrix with the singular vectors (Q)
 		"""
 
-		unitary_values, eigen_values, eigen_vectors = numpy.linalg.svd(unified_measurements, full_matrices=True)
+		unitary_values, eigen_values, eigen_vectors = numpy.linalg.svd(standardized_variables, full_matrices=True)
 
 		unitary_values = numpy.round(unitary_values,3)
 		eigen_values = numpy.round(eigen_values,3)
 		eigen_vectors = numpy.round(eigen_vectors,3)
 		
-		return unitary_values,eigen_values, eigen_vectors
+		return unitary_values, eigen_values, eigen_vectors
 
 	def calculate_variance_vector(self, eigen_values, number_of_rows):
 		"""
@@ -92,8 +92,8 @@ class PCACalculation():
 		"""
 		loadings = numpy.zeros(shape=(eigen_vectors.shape))
 
-		for column in range(0,eigen_vectors.shape[1]):
-			loadings[:,column] = numpy.round((eigen_vectors[:,column] * variance_vector[column]),4)
+		for column in range(0,len(variance_vectors)-1):
+			loadings[:,column] = numpy.round((eigen_vectors[:,column] * variance_vectors[column]),4)
 
 		return loadings
 
@@ -112,3 +112,21 @@ class PCACalculation():
 		scores_values = numpy.round(scores_values, 3)
 		
 		return scores_values
+
+	def calculate_principal_components(self, glcm_texture_measurements):
+		"""
+		Calculate the principal components of the image textures.
+
+		Arguments:
+			glcm_texture_measurements (2D array): The matrix of the GLCM testure measurements.
+											   Every row is an image and every column is a texture.
+		Returns:
+			scores (2D array):
+		"""
+		standard_values = self.calculate_standardized_variables(glcm_texture_measurements)
+		single_value_decomposition = self.calculate_singular_value_decomposition(standardized_variables=standard_values)
+		variance_vectors = self.calculate_variance_vector(eigen_values=single_value_decomposition[1], number_of_rows=glcm_texture_measurements.shape[0])
+		loadings = self.calculate_loadings(variance_vectors=variance_vectors, eigen_vectors=single_value_decomposition[2])
+		scores = self.calculate_scores(standardized_variables=standard_values , eigen_vectors=single_value_decomposition[2])
+		
+		return scores 
