@@ -32,5 +32,5 @@ example_data = numpy.array([
 [120, 56,	95.7,	2.09,	7,	  75,	94],
 ])
 
-pca = PCACalculation().calculate_principal_components(example_data)
-print(pca)
+pca_example = PCACalculation().calculate_principal_components(example_data)
+pca_all_mias = PCACalculation().calculate_principal_components(glcm_texture_measurements)
