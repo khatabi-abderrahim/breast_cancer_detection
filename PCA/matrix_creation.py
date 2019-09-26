@@ -36,7 +36,8 @@ class  MatrixCreation():
 		"""
 		texture_matrix = self.extract_data(image_number=1)
 
-		for image in range(2,323):
+		for image in range(2,322):
+			
 			texture_matrix = numpy.append(texture_matrix, self.extract_data(image_number=image), axis=0)
 
 		return texture_matrix
