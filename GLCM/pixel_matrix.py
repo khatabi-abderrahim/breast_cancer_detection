@@ -24,6 +24,6 @@ class CoOcurrencyMatrix():
 
 		glcm_percentage_matrix = feature.greycomatrix(image=image, distances=[1],
 			angles=[0, numpy.pi/4, numpy.pi/2, 3*numpy.pi/4],
-				normed=True, symmetric=True, levels=255)
+				normed=True, symmetric=True, levels=256)
 
 		return glcm_percentage_matrix
