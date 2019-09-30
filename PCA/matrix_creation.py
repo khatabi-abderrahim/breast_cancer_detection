@@ -9,7 +9,6 @@ class  MatrixCreation():
 	def matrix_labels(self):
 		"""
 		Creates a dictionary that stores the column and the txture that it stores.
-
 		Returns:
 			matrix_labels (dictionary): The key holds the number of column, while the value
 										hold the texture to be measured and the direction of
@@ -44,30 +43,39 @@ class  MatrixCreation():
 		}
 		return matrix_labels
 
-	def extract_data(self, image_number):
+	def extract_data(self, file_location):
 		"""
 		Extracts the texture data from the image text file as a two dimensional
-		numpy array
+		numpy array or the dependent variables.
 
 		Arguments:
-			image_number (integer): The number of the image ti extract the data
+			file_location (integer): A string containing the directory of the file where
+									 the data will be extracted
 
 		Returns:
 			file_data (array): A two dimensional array with the texture measurements of the
 							   given image_number 
 		"""
-		file_data = read_text_files("GLCM/matrix/textures_mdb{}.txt".format(image_number))
-		file_data = string_array_to_int_array(file_data)
-		file_data = numpy.array(file_data)
-		file_data = numpy.reshape(a=file_data,newshape=(1,24))
+		if file_location.split(".")[1] == 'txt':
+			file_data = read_text_files(file_location)
+			file_data = string_array_to_int_array(file_data)
+			file_data = numpy.array(file_data)
+			file_data = numpy.reshape(a=file_data,newshape=(1,25))
+		
+		elif file_location.split(".")[1] == 'csv':
+			file_data = []
+			with open(file='all-mias/images_clasifications.csv') as csvDataFile:
+				csvReader = csv.reader(csvDataFile)
+				for row in csvReader:
+					file_data.append(row)
+			file_data = numpy.array(file_data)
 
-		return file_data  
+		return file_data
 
 	def create_matrix(self):
 		"""
 		Constructs a matrix with every texture data from the image dataset to later
 		calculate the Principal Components Analyisis
-
 		Returns:
 			texture_matrix(array): A two dimensional array with the texture measurements of the
 							       entire dataset
