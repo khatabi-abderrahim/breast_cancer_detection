@@ -87,3 +87,25 @@ class  MatrixCreation():
 			texture_matrix = numpy.append(texture_matrix, self.extract_data(file_location="GLCM/matrix/textures_mdb{}.txt".format(image_number)), axis=0)
 
 		return texture_matrix
+	
+	def create_full_matrix(self):
+		"""
+		Creates a matrix with both the independent variables (GLCM texture features) and
+		dependent variables (image classifiers: character of background tissue (fatty,
+		fatty-glandular, dense-glandular), class of abnormality present (calcification,
+		well-defined/circumscribed masses, spiculated masses, other, ill-defined masses,
+		architectural distortion,asymmetry or if it's normal) and severity of
+		abnormality (beningn, malignant).)
+		"""
+		texture_matrix = self.create_texture_matrix()
+
+		image_clasifications_matrix = self.extract_data("all-mias/images_clasifications.csv")
+
+		data_matrix = numpy.zeros(shape=(image_clasifications_matrix.shape[0],texture_matrix.shape[1]+image_clasifications_matrix.shape[1]-2))
+
+		for row in range(0,image_clasifications_matrix.shape[0]-1):
+			for glcm_row in range(0,texture_matrix.shape[0]-1):
+				if int(texture_matrix[glcm_row,0]) == int(image_clasifications_matrix[row,0].split('mdb')[1]):
+					data_matrix[row] = numpy.append(texture_matrix[glcm_row,range(1,texture_matrix.shape[1])],image_clasifications_matrix[row,range(1,image_clasifications_matrix.shape[1])].astype(int) )
+
+		return data_matrix
