@@ -6,42 +6,45 @@ class  MatrixCreation():
 	"""
 	Create the PCA matrix with the GLCM variables of every image in the dataset.
 	"""
-	def matrix_labels(self):
+	def independent_variable_labels(self):
 		"""
-		Creates a dictionary that stores the column and the txture that it stores.
+		Creates a dictionary for the independent variable lables, that stores the column
+		and the GLCM texture that it stores.
+
 		Returns:
 			matrix_labels (dictionary): The key holds the number of column, while the value
 										hold the texture to be measured and the direction of
 										the relationship in the GLCM.
 										'[texture]_[GLCM direction]'
 		"""
-		matrix_labels = {
-			0: 'contrast_right',
-			1: 'contrast_left',
-			2: 'contrast_up',
-			3: 'contrast_down',
-			4: 'energy_right',
-			5: 'energy_left',
-			6: 'energy_up',
-			7: 'energy_down',
-			8: 'dissimilarity_right',
-			9: 'dissimilarity_left',
-			10: 'dissimilarity_up',
-			11: 'dissimilarity_down',
-			12: 'homogeneity_right',
-			13: 'homogeneity_left',
-			14: 'homogeneity_up',
-			15: 'homogeneity_down',
-			16: 'correlation_right',
-			17: 'correlation_left',
-			18: 'correlation_up',
-			19: 'correlation_down',
-			20: 'asm_right',
-			21: 'asm_left',
-			22: 'asm_up',
-			23: 'asm_down'
+		texture_matrix_labels = {
+			0: 'image reference'
+			1: 'contrast right',
+			2: 'contrast left',
+			3: 'contrast up',
+			4: 'contrast down',
+			5: 'energy right',
+			6: 'energy left',
+			7: 'energy up',
+			8: 'energy down',
+			9: 'dissimilarity right',
+			10: 'dissimilarity left',
+			11: 'dissimilarity up',
+			12: 'dissimilarity down',
+			13: 'homogeneity right',
+			14: 'homogeneity left',
+			15: 'homogeneity up',
+			16: 'homogeneity down',
+			17: 'correlation right',
+			18: 'correlation left',
+			19: 'correlation up',
+			20: 'correlation down',
+			21: 'asm right',
+			22: 'asm left',
+			23: 'asm up',
+			24: 'asm down'
 		}
-		return matrix_labels
+		return texture_matrix_labels
 
 	def extract_data(self, file_location):
 		"""
