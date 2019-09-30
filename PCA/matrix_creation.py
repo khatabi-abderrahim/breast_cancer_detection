@@ -72,17 +72,18 @@ class  MatrixCreation():
 
 		return file_data
 
-	def create_matrix(self):
+	def create_texture_matrix(self):
 		"""
 		Constructs a matrix with every texture data from the image dataset to later
 		calculate the Principal Components Analyisis
+
 		Returns:
 			texture_matrix(array): A two dimensional array with the texture measurements of the
 							       entire dataset
 		"""
-		texture_matrix = self.extract_data(image_number=1)
+		texture_matrix = self.extract_data(file_location="GLCM/matrix/textures_mdb1.txt")
 
-		for image in range(2,322):
-			texture_matrix = numpy.append(texture_matrix, self.extract_data(image_number=image), axis=0)
+		for image_number in range(2,323):
+			texture_matrix = numpy.append(texture_matrix, self.extract_data(file_location="GLCM/matrix/textures_mdb{}.txt".format(image_number)), axis=0)
 
 		return texture_matrix
