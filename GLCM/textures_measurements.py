@@ -2,6 +2,7 @@ from skimage import feature
 import numpy
 from GLCM.pixel_matrix import CoOcurrencyMatrix
 from helper_functions import write_text_files
+from PCA.pca_interpretation import PCAComponentsInterpretation
 
 class TextureMeasurements():
 	"""
@@ -14,8 +15,9 @@ class TextureMeasurements():
 	"""
 	def save_texture_measurements(self, image_number, image_file_location):
 		"""
-		From the GLCM matrix, calculate the texture measurements (contrast, energy)
-		and save them in a text file
+		From the GLCM matrix, create an array with the calculations of the texture
+		measurements (contrast, energy, dissimilarity, homogeneity, correlation, asm)
+		and save them in a text file.
 		Contrast: Measures the  amount  of local  variation  in  the  image.
 
 		Args:
@@ -35,7 +37,8 @@ class TextureMeasurements():
 		correlation = self.extract_texture_measurement(glcm_percentage_matrix, texture='correlation')
 		asm = self.extract_texture_measurement(glcm_percentage_matrix, texture='ASM')
 
-		textures = numpy.concatenate((contrast,energy,dissimilarity,homogeneity,correlation, asm),axis=0)
+		textures = numpy.concatenate((contrast,energy,dissimilarity,homogeneity,correlation,asm),axis=0)
+		textures = numpy.insert(arr=textures,obj=0,values=image_number)
 
 		write_text_files(link_to_file="GLCM/matrix/textures_mdb{}.txt".format(image_number), result_data=textures)
 
