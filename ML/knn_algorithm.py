@@ -14,9 +14,10 @@ class KnnAlgorithm():
 				training_and_test_data[3]: label_test
 
 		Returns:
-			errosrs (array): An array with all the obtained erros.
+			errosrs (dictionary): An array with that maps all the obtained erros with the
+								  number of neighbours.
 		"""
-		errors = []
+		errors = {}
 		
 		# Calculating error for K values between 1 and 40
 		for neighbors in range(1, 51):
@@ -24,6 +25,6 @@ class KnnAlgorithm():
 		    knn_classifier.fit(training_and_test_data[0], training_and_test_data[2])
 		    predict_labels = knn_classifier.predict(training_and_test_data[1])
 		    # Calculate the mean when the predicte data is not correct
-		    errors.append(numpy.mean(predict_labels != training_and_test_data[3]))
+		    errors[neighbors] = numpy.mean(predict_labels != training_and_test_data[3])
 
 		return errors
