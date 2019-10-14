@@ -20,13 +20,6 @@ class KnnAlgorithm():
 	def calculate_neighbors_errors(self):
 		"""
 		Calculates the errors from the knn neighbours in range from one to fifty-one.
-		
-		Args:
-			training_and_test_data (Tuple):
-				training_and_test_data[0]: data_train
-				training_and_test_data[1]: data_test
-				training_and_test_data[2]: label_train
-				training_and_test_data[3]: label_test
 
 		Returns:
 			errors (dictionary): An array with that maps all the obtained erros with the
@@ -60,3 +53,19 @@ class KnnAlgorithm():
 				best_neighbor = errors_key
 
 		return best_neighbor
+
+	def make_predictions(self):
+		"""
+		Make predictions using the KNN classifier and the neighbour with the
+		minimal errors.
+
+		Returns:
+			label_prediction (Matrix): The predicted labels from the knn classifier
+		"""
+		knn_classifier = KNeighborsClassifier(n_neighbors=self.calculate_minimum_error())
+		knn_classifier.fit(self.data_train, self.label_train)
+
+		#prediction
+		label_prediction = knn_classifier.predict(self.data_test)
+
+		return label_prediction
