@@ -17,16 +17,31 @@ class SvmAlgorithm():
 		self.label_train = PrepareData().create_training_and_test_data_sets(label_matrix=label_matrix)[2]
 		self.label_test = PrepareData().create_training_and_test_data_sets(label_matrix=label_matrix)[3]
 
-	def make_predictions(self):
+	def make_predictions(self, label_train):
 		"""
 		Make predictions of one of the labels.
 
 		Returns:
-			label_prediction (array): The predicted results
+			label_prediction (array): The predicted results of the given label
 		"""
 		svm_classifier = svm.SVC(gamma='scale', decision_function_shape='ovo')
-		svm_classifier.fit(self.data_train, self.label_train[:,0]) 
+		svm_classifier.fit(self.data_train, label_train) 
 			
 		label_prediction = svm_classifier.predict(self.data_test)
 
-		return label_prediction	
+		return label_prediction
+
+	def join_predictions(self):
+		"""
+		Join the the predictions of all labels
+
+		Returns:
+			label_prediction (matrix): The predicted results of every label from
+									   the data set.
+		"""
+		label_prediction = numpy.zeros(shape=self.label_test.shape)
+
+		for column in range(0, self.label_train.shape[1]-1):
+			label_prediction[:,column] = self.make_predictions(self.label_train[:,column])
+
+		return label_prediction
