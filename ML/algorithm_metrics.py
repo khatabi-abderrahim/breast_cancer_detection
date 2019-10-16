@@ -44,7 +44,8 @@ class ConfusionMatrix():
 	def calculate_sensitivity(self):
 		"""
 		Calculate the sensitivity of the predicted labels in the algorithm using the
-		confusion matrix.
+		confusion matrix. It measures the proportion of actual positives that are
+		correctly identified as such.
 		True Positive / (True positive + False Negative)
 
 		Returns:
@@ -57,3 +58,21 @@ class ConfusionMatrix():
 			sensitivity[label] = (self.create_confusion_matrix()[index][1][1]/(self.create_confusion_matrix()[index][1][1]+ self.create_confusion_matrix()[index][1][0]))
 
 		return sensitivity
+
+	def calculate_specificity(self):
+		"""
+		Calculate the specificity of the predicted labels in the algorithm using the
+		confusion matrix. It measures the proportion of actual negatives that are
+		correctly identified as such.
+		True Negative / (True Negative + False Positive)
+
+		Returns:
+			specificity (dictionary): Maps the lable with its calculated specificity
+		"""
+		specificity = {}
+		labels = self.labels
+
+		for index,label in enumerate(labels):
+			specificity[label] = (self.create_confusion_matrix()[index][0][0]/(self.create_confusion_matrix()[index][0][0]+ self.create_confusion_matrix()[index][0][1]))
+
+		return specificity
