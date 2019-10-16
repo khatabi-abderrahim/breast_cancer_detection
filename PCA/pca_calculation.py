@@ -9,7 +9,8 @@ class PCACalculation():
 	"""
 	def calculate_standardized_variables(self, glcm_texture_measurements):
 		"""
-		First unify each variable from the matrix
+		Values from the GLCM matrix are measured in different ranges. They need to be standardized to reffer to them
+		with the same standard.
 
 		Args:
 			glcm_measurements (array): The GLCM measurements data
@@ -27,7 +28,9 @@ class PCACalculation():
 
 	def calculate_singular_value_decomposition(self, standardized_variables):
 		"""
-		It is the generalization of the eigendecomposition of a positive normal matrix
+		It is the generalization of the eigendecomposition of a positive normal matrix.
+		Eigen values: Also called characteristic values or latent roots, are the variances
+					  of the principal components.
 
 		Arguments:
 			unified_measurements (matrix): 
@@ -77,7 +80,7 @@ class PCACalculation():
 
 	def calculate_scores(self, standardized_variables, eigen_vectors):
 		"""
-		Calculate scores
+		the scores are the coordinates of the points.
 
 		Arguments:
 			standardized_measurements (array): The unified GLCM measurements (A)
@@ -119,7 +122,7 @@ class PCACalculation():
 		single_value_decomposition = self.calculate_singular_value_decomposition(standardized_variables=standard_values)
 		variance_vectors = self.calculate_variance_vector(eigen_values=single_value_decomposition[1], number_of_rows=glcm_texture_measurements.shape[0])
 		loadings = self.calculate_loadings(variance_vectors=variance_vectors, eigen_vectors=single_value_decomposition[2])
-		scores = self.calculate_scores(standardized_variables=standard_values , eigen_vectors=single_value_decomposition[2])
+		scores = self.calculate_scores(standardized_variables=standard_values, eigen_vectors=single_value_decomposition[2])
 		square_cosines = self.calculate_square_cosines(loadings=loadings)
 
-		return square_cosines
+		return square_cosines, single_value_decomposition[1]
