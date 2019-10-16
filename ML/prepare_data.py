@@ -3,7 +3,17 @@ from sklearn.model_selection import train_test_split
 from PCA.matrix_creation import MatrixCreation
 
 class PrepareData():
-	def prepare_texture_matrix(self, principal_components):
+	def __init__(self):
+		"""
+		Constructor method that initialices the labels of the principal components.
+		"""
+		self.principal_components = ['contrast right', 'contrast left', 'contrast up',
+		'contrast down', 'energy right', 'energy left', 'energy up', 'energy down',
+		'dissimilarity right', 'dissimilarity left', 'dissimilarity up',
+		'dissimilarity down', 'homogeneity right', 'homogeneity left', 'homogeneity up',
+		'homogeneity down', 'correlation right', 'correlation left']
+
+	def prepare_texture_matrix(self):
 		"""
 		Creates the matrix using only the principal components chosen from the PCA
 
@@ -22,7 +32,7 @@ class PrepareData():
 		columns_to_be_deleted = []
 
 		for key, label in labels.items():
-			if label not in principal_components:
+			if label not in self.principal_components:
 				columns_to_be_deleted.append(key)
 
 		texture_matrix = numpy.delete(texture_matrix,columns_to_be_deleted,axis=1)
@@ -44,13 +54,6 @@ class PrepareData():
 			label_test (matrix): The result data that will be compared to the predicted data
 								 to get how correct is the algorithm.
 		"""
-		principal_components = ['contrast right', 'contrast left', 'contrast up',
-		'contrast down', 'energy right', 'energy left', 'energy up', 'energy down',
-		'dissimilarity right', 'dissimilarity left', 'dissimilarity up',
-		'dissimilarity down', 'homogeneity right', 'homogeneity left', 'homogeneity up',
-		'homogeneity down', 'correlation right', 'correlation left']
-
-
-		data_train, data_test, label_train, label_test = train_test_split(self.prepare_texture_matrix(principal_components=principal_components), label_matrix, test_size=0.20)
+		data_train, data_test, label_train, label_test = train_test_split(self.prepare_texture_matrix(), label_matrix, test_size=0.20)
 
 		return data_train, data_test, label_train, label_test
