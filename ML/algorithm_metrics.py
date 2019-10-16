@@ -17,6 +17,9 @@ class ConfusionMatrix():
 
 		self.label_test = PrepareData().create_training_and_test_data_sets(label_matrix=label_matrix)[3]
 		self.predicted_results = predicted_results
+		self.labels =  ['Fatty', 'Fatty-glandular', 'Dense-glandular', 'Calcification', 'Well-defined/circumscribed masses',
+						'Spiculated masses', 'Other, ill-defined masses', 'Architectural distortion', 'Asymmetry', 'Normal',
+                		'Benign', 'Malignant']
 
 	def create_confusion_matrix(self):
 		"""
@@ -37,3 +40,20 @@ class ConfusionMatrix():
 		labels_confusion_matrixes = multilabel_confusion_matrix(self.label_test, self.predicted_results)
 
 		return labels_confusion_matrixes
+
+	def calculate_sensitivity(self):
+		"""
+		Calculate the sensitivity of the predicted labels in the algorithm using the
+		confusion matrix.
+		True Positive / (True positive + False Negative)
+
+		Returns:
+			sensitivity (dictionary): Maps the lable with its calculated sensitivity 
+		"""
+		sensitivity = {}
+		labels = self.labels
+
+		for index,label in enumerate(labels):
+			sensitivity[label] = (self.create_confusion_matrix()[index][1][1]/(self.create_confusion_matrix()[index][1][1]+ self.create_confusion_matrix()[index][1][0]))
+
+		return sensitivity
