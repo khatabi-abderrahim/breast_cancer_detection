@@ -93,3 +93,21 @@ class ConfusionMatrix():
 			precision[label] = (self.create_confusion_matrix()[index][1][1]/(self.create_confusion_matrix()[index][1][1]+ self.create_confusion_matrix()[index][0][1]))
 
 		return precision
+
+	def calculate_negative_predictive_value(self):
+		"""
+		Calculate the negative predictive value of the predicted labels in the algorithm
+		using the confusion matrix. The proportions of negative results that are
+		true negative.
+		True Negative / (True Negative  + False Negative)
+
+		Returns:
+			precision (dictionary): Maps the lable with its calculated precision
+		"""
+		negative_predictive_value = {}
+		labels = self.labels
+
+		for index,label in enumerate(labels):
+			negative_predictive_value[label] = (self.create_confusion_matrix()[index][0][0]/(self.create_confusion_matrix()[index][0][0]+ self.create_confusion_matrix()[index][1][0]))
+
+		return negative_predictive_value
