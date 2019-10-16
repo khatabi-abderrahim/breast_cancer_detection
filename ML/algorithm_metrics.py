@@ -111,3 +111,22 @@ class ConfusionMatrix():
 			negative_predictive_value[label] = (self.create_confusion_matrix()[index][0][0]/(self.create_confusion_matrix()[index][0][0]+ self.create_confusion_matrix()[index][1][0]))
 
 		return negative_predictive_value
+
+	def calculate_false_negative_rate(self):
+		"""
+		Calculate the false negative rate value of the predicted labels in the algorithm
+		using the confusion matrix. It is also known as type I error. This type of error
+		leads to the conclusion that a supposed effect or relationship exists when in
+		fact it does not.
+		False Negative / (False Negative  + True Positive)
+
+		Returns:
+			false_negative_rate (dictionary): Maps the lable with its false_negative_rate
+		"""
+		false_negative_rate = {}
+		labels = self.labels
+
+		for index,label in enumerate(labels):
+			false_negative_rate[label] = (self.create_confusion_matrix()[index][1][0]/(self.create_confusion_matrix()[index][1][0]+ self.create_confusion_matrix()[index][1][1]))
+
+		return false_negative_rate
