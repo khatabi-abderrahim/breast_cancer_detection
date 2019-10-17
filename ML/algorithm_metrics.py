@@ -133,23 +133,40 @@ class ConfusionMatrix():
 
 		return false_negative_rate
 
-def calculate_false_positive_rate(self):
+	def calculate_false_positive_rate(self):
 		"""
-		Calculate the false negative rate value of the predicted labels in the algorithm
-		using the confusion matrix. A failure to reject a true null hypothesis. It is
-		also known as type I error. This type of error leads to the conclusion that a
-		supposed effect or relationship does not exists when in fact it does. An example
-		is when a test that shows a patient has a disease when in fact the patient does
-		not have the it.
-		False Positive / (False Positive  + True Negative)
+    	Calculate the false negative rate value of the predicted labels in the algorithm
+    	using the confusion matrix. A failure to reject a true null hypothesis. It is
+    	also known as type I error. This type of error leads to the conclusion that a
+    	supposed effect or relationship does not exists when in fact it does. An example
+    	is when a test that shows a patient has a disease when in fact the patient does
+    	not have the it.
+    	False Positive / (False Positive  + True Negative)
 
-		Returns:
-			false_positive_rate (dictionary): Maps the lable with its false_positive_rate
-		"""
+    	Returns:
+    		false_positive_rate (dictionary): Maps the lable with its false_positive_rate
+    	"""
 		false_negative_rate = {}
 		labels = self.labels
 
 		for index,label in enumerate(labels):
 			false_negative_rate[label] = (self.create_confusion_matrix()[index][0][1]/(self.create_confusion_matrix()[index][0][1]+ self.create_confusion_matrix()[index][1][0]))
 
-		return false_negative_rate	
+		return false_negative_rate
+
+	def calculate_false_discovery_rate(self):
+		"""
+		Calculate the false discovery rate value of the predicted labels in the
+		algorithm using the confusion matrix. It is the expected proportion of type I
+		errors.
+		False Positive / (False Positive  + True Positive)
+
+		Returns:
+			false_discovery_rate (dictionary): Maps the lable with its false_discovery_rate
+		"""
+		false_discovery_rate = {}
+
+		for index,label in enumerate(self.labels):
+			false_discovery_rate[label] = (self.create_confusion_matrix()[index][0][1]/(self.create_confusion_matrix()[index][0][1]+ self.create_confusion_matrix()[index][1][1]))
+
+		return false_discovery_rate
