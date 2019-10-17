@@ -164,3 +164,21 @@ class ConfusionMatrix():
 			false_discovery_rate[label] = (self.create_confusion_matrix()[index][0][1]/(self.create_confusion_matrix()[index][0][1]+ self.create_confusion_matrix()[index][1][1]))
 
 		return false_discovery_rate
+
+	def calculate_false_omission_rate(self):
+		"""
+		Calculate the false false omission rate value of the predicted labels in the
+		algorithm using the confusion matrix. Tt is the complement of the negative
+		predictive value. It measures the proportion of false negatives which are
+		incorrectly rejected.
+		False Negative / (False Negative  + True Negative)
+
+		Returns:
+			false_omission_rate (dictionary): Maps the lable with its false_omission_rate
+		"""
+		false_omission_rate = {}
+
+		for index,label in enumerate(self.labels):
+			false_omission_rate[label] = (self.create_confusion_matrix()[index][1][0]/(self.create_confusion_matrix()[index][1][0]+ self.create_confusion_matrix()[index][0][0]))
+
+		return false_omission_rate
