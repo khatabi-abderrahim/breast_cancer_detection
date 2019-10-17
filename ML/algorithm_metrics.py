@@ -115,9 +115,11 @@ class ConfusionMatrix():
 	def calculate_false_negative_rate(self):
 		"""
 		Calculate the false negative rate value of the predicted labels in the algorithm
-		using the confusion matrix. It is also known as type I error. This type of error
-		leads to the conclusion that a supposed effect or relationship exists when in
-		fact it does not.
+		using the confusion matrix. A failure to reject a false null hypothesis. It is
+		also known as type II error. This type of error leads to the conclusion that a
+		supposed effect or relationship does not exists when in fact it does. An example
+		is when a blood test fails to detect the disease it was designed to detect, in a
+		patient who really has the disease.
 		False Negative / (False Negative  + True Positive)
 
 		Returns:
@@ -130,3 +132,24 @@ class ConfusionMatrix():
 			false_negative_rate[label] = (self.create_confusion_matrix()[index][1][0]/(self.create_confusion_matrix()[index][1][0]+ self.create_confusion_matrix()[index][1][1]))
 
 		return false_negative_rate
+
+def calculate_false_positive_rate(self):
+		"""
+		Calculate the false negative rate value of the predicted labels in the algorithm
+		using the confusion matrix. A failure to reject a true null hypothesis. It is
+		also known as type I error. This type of error leads to the conclusion that a
+		supposed effect or relationship does not exists when in fact it does. An example
+		is when a test that shows a patient has a disease when in fact the patient does
+		not have the it.
+		False Positive / (False Positive  + True Negative)
+
+		Returns:
+			false_positive_rate (dictionary): Maps the lable with its false_positive_rate
+		"""
+		false_negative_rate = {}
+		labels = self.labels
+
+		for index,label in enumerate(labels):
+			false_negative_rate[label] = (self.create_confusion_matrix()[index][0][1]/(self.create_confusion_matrix()[index][0][1]+ self.create_confusion_matrix()[index][1][0]))
+
+		return false_negative_rate	
