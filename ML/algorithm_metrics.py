@@ -52,9 +52,8 @@ class ConfusionMatrix():
 			sensitivity (dictionary): Maps the lable with its calculated sensitivity 
 		"""
 		sensitivity = {}
-		labels = self.labels
 
-		for index,label in enumerate(labels):
+		for index,label in enumerate(self.labels):
 			sensitivity[label] = (self.create_confusion_matrix()[index][1][1]/(self.create_confusion_matrix()[index][1][1]+ self.create_confusion_matrix()[index][1][0]))
 
 		return sensitivity
@@ -70,9 +69,8 @@ class ConfusionMatrix():
 			specificity (dictionary): Maps the lable with its calculated specificity
 		"""
 		specificity = {}
-		labels = self.labels
 
-		for index,label in enumerate(labels):
+		for index,label in enumerate(self.labels):
 			specificity[label] = (self.create_confusion_matrix()[index][0][0]/(self.create_confusion_matrix()[index][0][0]+ self.create_confusion_matrix()[index][0][1]))
 
 		return specificity
@@ -87,9 +85,8 @@ class ConfusionMatrix():
 			precision (dictionary): Maps the lable with its calculated precision
 		"""
 		precision = {}
-		labels = self.labels
 
-		for index,label in enumerate(labels):
+		for index,label in enumerate(self.labels):
 			precision[label] = (self.create_confusion_matrix()[index][1][1]/(self.create_confusion_matrix()[index][1][1]+ self.create_confusion_matrix()[index][0][1]))
 
 		return precision
@@ -105,9 +102,8 @@ class ConfusionMatrix():
 			precision (dictionary): Maps the lable with its calculated precision
 		"""
 		negative_predictive_value = {}
-		labels = self.labels
 
-		for index,label in enumerate(labels):
+		for index,label in enumerate(self.labels):
 			negative_predictive_value[label] = (self.create_confusion_matrix()[index][0][0]/(self.create_confusion_matrix()[index][0][0]+ self.create_confusion_matrix()[index][1][0]))
 
 		return negative_predictive_value
@@ -126,9 +122,8 @@ class ConfusionMatrix():
 			false_negative_rate (dictionary): Maps the lable with its false_negative_rate
 		"""
 		false_negative_rate = {}
-		labels = self.labels
 
-		for index,label in enumerate(labels):
+		for index,label in enumerate(self.labels):
 			false_negative_rate[label] = (self.create_confusion_matrix()[index][1][0]/(self.create_confusion_matrix()[index][1][0]+ self.create_confusion_matrix()[index][1][1]))
 
 		return false_negative_rate
@@ -147,9 +142,8 @@ class ConfusionMatrix():
     		false_positive_rate (dictionary): Maps the lable with its false_positive_rate
     	"""
 		false_negative_rate = {}
-		labels = self.labels
 
-		for index,label in enumerate(labels):
+		for index,label in enumerate(self.labels):
 			false_negative_rate[label] = (self.create_confusion_matrix()[index][0][1]/(self.create_confusion_matrix()[index][0][1]+ self.create_confusion_matrix()[index][1][0]))
 
 		return false_negative_rate
