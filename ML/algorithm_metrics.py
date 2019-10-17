@@ -182,3 +182,20 @@ class ConfusionMatrix():
 			false_omission_rate[label] = (self.create_confusion_matrix()[index][1][0]/(self.create_confusion_matrix()[index][1][0]+ self.create_confusion_matrix()[index][0][0]))
 
 		return false_omission_rate
+
+	def calculate_critical_success_index(self):
+		"""
+		Calculate the critical succes index value of the predicted labels in the
+		algorithm using the confusion matrix. This verification statistic assumes that
+		the times when an event was neither expected nor observed are of no consequence.
+		True Positive / (True Positive + False Negative  + False Positive)
+
+		Returns:
+			critical_success_index (dictionary): Maps the lable with its critical_success_index
+		"""
+		critical_success_index = {}
+
+		for index,label in enumerate(self.labels):
+			critical_success_index[label] = (self.create_confusion_matrix()[index][1][1]/(self.create_confusion_matrix()[index][1][1] + self.create_confusion_matrix()[index][1][0] + self.create_confusion_matrix()[index][0][1]))
+
+		return critical_success_index
