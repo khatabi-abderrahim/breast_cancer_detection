@@ -199,3 +199,24 @@ class ConfusionMatrix():
 			critical_success_index[label] = (self.create_confusion_matrix()[index][1][1]/(self.create_confusion_matrix()[index][1][1] + self.create_confusion_matrix()[index][1][0] + self.create_confusion_matrix()[index][0][1]))
 
 		return critical_success_index
+
+	def get_metrics(self):
+		"""
+		Obtain the performance of the given classification model.
+
+		Returns:
+			metrics (dictionary): Maps the metric and the label it's evaluating.
+		"""
+		metrics = {}
+
+		metrics['sensitivity'] = self.calculate_sensitivity()
+		metrics['specificity'] = self.calculate_specificity()
+		metrics['negative predictive value'] = self.calculate_negative_predictive_value()
+		metrics['false negative rate'] = self.calculate_false_negative_rate()
+		metrics['false positive rate'] = self.calculate_false_positive_rate()
+		metrics['false discovery rate'] = self.calculate_false_discovery_rate()
+		metrics['false omission rate'] = self.calculate_false_omission_rate()
+		metrics['critical success index'] = self.calculate_critical_success_index()
+
+
+		return metrics
