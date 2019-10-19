@@ -21,6 +21,6 @@ svm_metrics = ConfusionMatrix(predicted_results=svm_classifier).get_metrics()
 print(svm_metrics)
 
 print("Logistic Regression")
-logistic_regresion_classifier = SvmAlgorithm().join_predictions()
+logistic_regresion_classifier = LogisticRegresionAlgorithm().join_predictions()
 logistic_regresion_metrics = ConfusionMatrix(predicted_results=logistic_regresion_classifier).get_metrics()
 print(logistic_regresion_metrics)
