@@ -1,5 +1,5 @@
 import numpy
-from sklearn import svm
+from sklearn.linear_model import LogisticRegression
 from PCA.matrix_creation import MatrixCreation
 from ML.prepare_data import PrepareData
 
