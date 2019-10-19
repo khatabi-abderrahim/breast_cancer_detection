@@ -198,6 +198,24 @@ class ConfusionMatrix():
 
 		return critical_success_index
 
+	def calculate_accuracy(self):
+		"""
+		Calculate the accuracy score value of the predicted labels in the algorithm
+		using the confusion matrix. Accuracy is used as a statistical measure of how
+		well a binary classification test correctly identifies or excludes a condition
+		(True Positive + True Negative)
+		/(True Positive + True Negative + False Positive + False Negative)
+
+		Returns:
+			accuracy (dictionary): Maps the lable with its accuracy
+		"""
+		accuracy = {}
+
+		for index,label in enumerate(self.labels):
+			accuracy[label] = ((self.create_confusion_matrix()[index][0][0]+self.create_confusion_matrix()[index][1][1])/(self.create_confusion_matrix()[index][0][0] + self.create_confusion_matrix()[index][0][1] + self.create_confusion_matrix()[index][1][0] + self.create_confusion_matrix()[index][1][1]))
+
+		return accuracy
+
 	def get_metrics(self):
 		"""
 		Obtain the performance of the given classification model.
@@ -215,6 +233,7 @@ class ConfusionMatrix():
 		metrics['false discovery rate'] = self.calculate_false_discovery_rate()
 		metrics['false omission rate'] = self.calculate_false_omission_rate()
 		metrics['critical success index'] = self.calculate_critical_success_index()
+		metrics['accuracy'] = self.calculate_accuracy()
 
 
 		return metrics
