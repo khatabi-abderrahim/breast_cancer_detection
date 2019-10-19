@@ -13,9 +13,7 @@ class ConfusionMatrix():
 		Constructor method that initialices the result labels used to train the
 		algorithm and the actual results.
 		"""
-		label_matrix = MatrixCreation().create_full_matrix()[:,range(24,36)]
-
-		self.label_test = PrepareData().create_training_and_test_data_sets(label_matrix=label_matrix)[3]
+		self.label_test = PrepareData().create_training_and_test_data_sets()[3]
 		self.predicted_results = predicted_results
 		self.labels =  ['Fatty', 'Fatty-glandular', 'Dense-glandular', 'Calcification', 'Well-defined/circumscribed masses',
 						'Spiculated masses', 'Other, ill-defined masses', 'Architectural distortion', 'Asymmetry', 'Normal',
