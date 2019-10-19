@@ -28,3 +28,18 @@ class LogisticRegresionAlgorithm():
 		label_prediction = logistic_regresion_classifier.predict(self.data_test)
 
 		return label_prediction
+
+	def join_predictions(self):
+		"""
+		Join the the predictions of all labels
+
+		Returns:
+			label_prediction (matrix): The predicted results of every label from
+									   the data set.
+		"""
+		label_prediction = numpy.zeros(shape=self.label_test.shape)
+
+		for column in range(0, self.label_train.shape[1]-1):
+			label_prediction[:,column] = self.make_predictions(self.label_train[:,column])
+
+		return label_prediction
