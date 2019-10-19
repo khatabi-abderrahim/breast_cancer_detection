@@ -216,6 +216,23 @@ class ConfusionMatrix():
 
 		return accuracy
 
+	def calculate_f1_score(self):
+		"""
+		Calculate the f1 score value of the predicted labels in the algorithm using the
+		confusion matrix. It is a measure of a test's accuracy. It considers both the
+		precision and the sensitivity.
+		(Precision * Sensitivity) / (Precision + Sensitivity)
+
+		Returns:
+			f1_score (dictionary): Maps the lable with its f1_score
+		"""
+		f1_score = {}
+		
+		for index,label in enumerate(self.labels):
+			f1_score[label] = 2 * (self.calculate_precision()[label] * self.calculate_sensitivity()[label])/(self.calculate_precision()[label] + self.calculate_sensitivity()[label])
+
+		return f1_score
+
 	def get_metrics(self):
 		"""
 		Obtain the performance of the given classification model.
@@ -227,6 +244,7 @@ class ConfusionMatrix():
 
 		metrics['sensitivity'] = self.calculate_sensitivity()
 		metrics['specificity'] = self.calculate_specificity()
+		metrics['precision'] = self.calculate_precision()
 		metrics['negative predictive value'] = self.calculate_negative_predictive_value()
 		metrics['false negative rate'] = self.calculate_false_negative_rate()
 		metrics['false positive rate'] = self.calculate_false_positive_rate()
@@ -234,6 +252,7 @@ class ConfusionMatrix():
 		metrics['false omission rate'] = self.calculate_false_omission_rate()
 		metrics['critical success index'] = self.calculate_critical_success_index()
 		metrics['accuracy'] = self.calculate_accuracy()
+		metrics['F1 score'] = self.calculate_f1_score()
 
 
 		return metrics
