@@ -9,13 +9,10 @@ class SvmAlgorithm():
 		Constructor method that keeps the data and labels in two sets for
 		training and testing. 
 		"""
-			
-		label_matrix = MatrixCreation().create_full_matrix()[:,range(24,36)]
-
-		self.data_train = PrepareData().create_training_and_test_data_sets(label_matrix=label_matrix)[0]
-		self.data_test = PrepareData().create_training_and_test_data_sets(label_matrix=label_matrix)[1]
-		self.label_train = PrepareData().create_training_and_test_data_sets(label_matrix=label_matrix)[2]
-		self.label_test = PrepareData().create_training_and_test_data_sets(label_matrix=label_matrix)[3]
+		self.data_train = PrepareData().create_training_and_test_data_sets()[0]
+		self.data_test = PrepareData().create_training_and_test_data_sets()[1]
+		self.label_train = PrepareData().create_training_and_test_data_sets()[2]
+		self.label_test = PrepareData().create_training_and_test_data_sets()[3]
 
 	def make_predictions(self, label_train):
 		"""
