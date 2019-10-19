@@ -1,6 +1,8 @@
 import numpy
 import random
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import Normalizer
 from PCA.matrix_creation import MatrixCreation
 
 class PrepareData():
@@ -38,6 +40,19 @@ class PrepareData():
 		
 		return full_matrix
 
+	def normalize_data(self):
+		"""
+		The Normalizer rescales the vector for each sample to have unit norm,
+		independently of the distribution of the samples.
+
+		Returns:
+			texture_matrix (matrix): A normalized and balanced matrix of the GLCM textures.
+		"""
+		full_matrix = self.balance_clases()
+		texture_matrix = Normalizer().fit_transform(X=full_matrix[:,range(0,24)])
+
+		return texture_matrix
+
 	def prepare_texture_matrix(self):
 		"""
 		Creates the matrix using only the principal components chosen from the PCA
@@ -49,10 +64,8 @@ class PrepareData():
 			texture_matrix (matrix): A matrix with the principal textures to be analyzed in
 									 the machine learning algorithm.
 		"""
-		full_matrix = self.balance_clases()
+		texture_matrix = self.normalize_data()
 		labels = MatrixCreation().independent_variable_labels()
-
-		texture_matrix = full_matrix[:,range(0,24)]
 		
 		columns_to_be_deleted = []
 
